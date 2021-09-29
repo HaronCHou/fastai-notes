@@ -1,7 +1,11 @@
 # lesson8
 
-- 视频地址：https://course19.fast.ai/videos/?lesson=8
-- 
+- 2019年视频地址：https://course19.fast.ai/videos/?lesson=8
+- YouTube lesson8 英文字幕（自动生成），中文字幕（自动翻译，不太好）：https://www.youtube.com/playlist?list=PLWP4UZT-7V3Gv9y_dLHzM0A-Ju3EqDP9r
+- 哔哩哔哩 视频地址：https://www.bilibili.com/video/BV1yx411d7aL?from=search&seid=4827352682218845364&spm_id_from=333.337.0.0
+- 笔记参考：https://forums.fast.ai/t/forum-markdown-notes-lesson-8/41896
+- 笔记参考：https://github.com/WittmannF/fastai-dlpt2-notes/blob/master/lesson-08.md
+- fastai forum论坛 第八课 Links and Updates：https://forums.fast.ai/t/2019-part-2-lessons-links-and-updates/41429
 
 # 前言
 
