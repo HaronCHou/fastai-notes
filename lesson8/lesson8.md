@@ -6,6 +6,8 @@
 - 笔记参考：https://forums.fast.ai/t/forum-markdown-notes-lesson-8/41896
 - 笔记参考：https://github.com/WittmannF/fastai-dlpt2-notes/blob/master/lesson-08.md
 - fastai forum论坛 第八课 Links and Updates：https://forums.fast.ai/t/2019-part-2-lessons-links-and-updates/41429
+- 笔记本地址：https://nbviewer.jupyter.org/github/fastai/course-v3/tree/master/nbs/dl2/
+  - 用Jupyter viewer 效果真的好，github中反而打不开
 
 # 前言
 
@@ -545,6 +547,33 @@ test_near(t1, matmul(m1, m2))
 
 我们并没有真正复制，看起来我们复制了，但实际上step=0。
 
+### squeeze和unsqueeze的不同
+
+- unsqueeze是将一维扩展为2维，注意tensor的不同
+
+```python
+c = tensor([10., 20, 30])
+c
+-------
+tensor([10., 20, 30])
+
+c.unsqueeze(0)#
+---
+tensor([[10., 20., 30.]])
+
+c.unsqueeze(1)
+---
+tensor([[10.],
+        [20.],
+        [30.]])
+
+c.shape, c.unsqueeze(0).shape,c.unsqueeze(1).shape
+----
+(torch.Size([3]), torch.Size([1, 3]), torch.Size([3, 1]))
+```
+
+
+
 ### 回到我们的函数
 
 让我们利用广播并减少`matmul`函数中的循环：
@@ -665,6 +694,42 @@ Converted lesson82.ipynb to nb_lesson82.py
 | pytorch 广播乘法 | 289us               |      |
 | 爱因斯坦求和     | 16.6us              |      |
 
+## 数据归一化
+
+```python
+#export
+from exp.nb_01 import *
+
+def get_data():
+    path = datasets.download_data(MNIST_URL, ext='.gz')
+    with gzip.open(path, 'rb') as f:
+        ((x_train, y_train), (x_valid, y_valid), _) = pickle.load(f, encoding='latin-1')
+    return map(tensor, (x_train,y_train,x_valid,y_valid))
+
+def normalize(x, m, s): return (x-m)/s
+
+x_train,y_train,x_valid,y_valid = get_data()
+train_mean,train_std = x_train.mean(),x_train.std()
+train_mean,train_std
+----(tensor(0.1304), tensor(0.3073))
+
+x_train = normalize(x_train, train_mean, train_std)
+# NB: Use training, not validation mean for validation set
+x_valid = normalize(x_valid, train_mean, train_std)
+
+train_mean,train_std = x_train.mean(),x_train.std()
+train_mean,train_std
+----(tensor(3.0614e-05), tensor(1.))
+
+(tensor(3.0614e-05), tensor(1.))
+#export
+def test_near_zero(a,tol=1e-3): assert a.abs()<tol, f"Near zero: {a}"
+    
+test_near_zero(x_train.mean())
+test_near_zero(1-x_train.std())
+
+```
+
 
 
 # 第8课制作Relu/初始化
@@ -777,7 +842,6 @@ n,m,c
 
 ```python
 # our linear layer definition
-
 def lin(x, w, b):
     return x@w + b
 
@@ -785,7 +849,7 @@ def lin(x, w, b):
 nh = 50
 
 # initialize our weights and bias
-# simplified kaiming init / he init
+# standard xavier init / he init
 w1 = torch.randn(m,nh)/math.sqrt(m)
 b1 = torch.zeros(nh)
 
@@ -831,6 +895,16 @@ print(t.mean(), t.std())
 ```python
 tensor(-0.0155) tensor(1.0006)
 ```
+- 权重w1初始化为随机初始化，均值为0，标准差为1.
+- 但是x_valid经x_train 归一化normalization之后，再与W1相乘积之后，均值为0，标注差还是1.
+- 就应该是这样的，一维我们使用了xavier init
+
+### 初始化问题——kaiming init
+
+- 希望权重初始化时 仍然是较小的数值，如∈[0,1]。**权重初始化为小一些的值**
+- 大型网络，如1万层，没有归一化，但是进行了仔细的初始化。网络能继续训练
+  - 1cycle训练中呈现超级收敛，也是在于前几次训练中学习率先升后降，所以与初始化有关。
+
 初始化权重很重要。示例：使用非常具体的权重初始化训练大型网络[https://arxiv.org/abs/1901.09321 5](https://arxiv.org/abs/1901.09321). 事实证明，即使在单周期训练中，那些第一次迭代也非常重要。我们会回到这个
 
 >**这可能看起来是一个非常小的问题，但是作为我们将在接下来的几节课中看到它就像训练神经网络时重要的事情，**实际上在过去的几个月里人们真的注意到这有多么重要，有修复初始化之类的事情。这些人实际上训练了一个没有归一化层的 10,000 层深度神经网络，基本上只是通过仔细的初始化，所以现在人们真的花了很多时间思考，==我们如何初始化真的很重要==，你知道我们已经有了很多诸如单循环训练和超级收敛之类的成功，这与前几次迭代中发生的事情有关，**事实证明这完全与初始化有关**，因此我们将花费大量时间深入研究这一点，
@@ -858,8 +932,10 @@ t = relu(lin(x_valid, w1, b1))
 print(t.mean(), t.std())
 ```
 ```python
-tensor(0.3896) tensor(0.5860)
+tensor(0.3896) tensor(0.5860) # xavier init 初始化后，x_valid后的均值和方差，偏离1太远
 ```
+- 由于是xavier init，W1*X后均值为0，标准差为1.
+  - 但是经过relu之后，去掉了负数，所以均值和标准差都变了，标准差变为0.5，因为有一半的数据被扔掉了，差不多就是这样。
 - 由于ReLU把<0的数值给去掉了，所以ReLU后的激活元们，不再是均值为0，标准差为1了。
 - 所以这是**过去几年中最出色的见解之一，也是最非凡的论文之一，它是由我们提到的那个人领导的 2015 年图像网络获奖者的论文**，He Kaiming
 - 这充满了伟大的想法，==阅读竞赛获胜者的论文是一个非常非常好的想法==，因为他们往往是你知道普通论文会花一页又一页试图证明，他们做的一个微小的调整为什么应该被接受到欧洲，但==是比赛获胜者有 20 个好主意，只能顺便提一下==
@@ -890,13 +966,12 @@ tensor(0.3896) tensor(0.5860)
 # kaiming init / he init for relu
 w1 = torch.randn(m,nh)*math.sqrt(2/m)
 ```
-s
 ```python
 w1.mean(),w1.std()
 ```
 
 ```python
-(tensor(0.0003), tensor(0.0506))
+(tensor(0.0003), tensor(0.0506))  
 ```
 
 ```python
@@ -906,7 +981,7 @@ t.mean(),t.std()
 ### 现在结果更接近于均值 0，标准 1
 
 ```python
-(tensor(0.5896), tensor(0.8658))
+(tensor(0.5896), tensor(0.8658))  # 经过何凯明的初始化之后，标准差上升了
 ```
 这篇论文值得深入研究。他们解决的另一个有趣的话题是 conv 层非常类似于矩阵乘法
 
@@ -916,7 +991,7 @@ b可能不怎么重要，
 
 然后他们会带您逐步了解整个网络中的方差如何变化。
 
-- 前向传递是矩阵乘法，后向传递是带有转置的矩阵乘法。他们最终推荐 sqrt(2 over activations)。现在我们了解了如何归一化权重以及如何计算 kaiming 法线，让我们使用它的 pytorch 版本
+- ==前向传递是矩阵乘法，后向传递是带有转置的矩阵乘法==。他们最终推荐 sqrt(2 over activations)。现在我们了解了如何归一化权重以及如何计算 kaiming 法线，让我们使用它的 pytorch 版本
 - std就变为1了，但是mean仍然为0.5，因为ReLU删除了小于0的激活元。
 - 我没有看到任何人在文献中谈论这一点，这是我上周刚刚尝试的东西，这是一种显而易见的东西，不用`max(0,x)`，而是使用`max(-0.5, x)`
 - 在我的简短实验中，这似乎有帮助，所以有你可以尝试的另一件事，看看它是否真的有帮助，或者如果我只是想象一些事情，它肯定会让你恢复到正确的平均值，
@@ -933,6 +1008,7 @@ w1 = torch.zeros(m,nh)
 init.kaiming_normal_(w1, mode='fan_out')
 t = relu(lin(x_valid, w1, b1))
 ```
+- 这是pytorch的init中的kaiming_normal函数，里面的代码就是sqrt(2/m)
 - 基本上它的意思是你除以根 M 或根 NH 因为如果你除以根 M 正如你将在论文的那部分看到的那样我建议你阅读，这将在前向传递期间将方差保持在 1 但如果你使用 NH 它会给你正确的单位方差在向后传递中保持1.
 - 那么我们为什么要这样做`fan_out`呢？你是除以`row(m)`还是除以`row(nh)`。因为我们的权重形状是 784 x 50。pytorch 实际上是相反的（50 x 784）。这是如何运作的？
 
@@ -991,7 +1067,7 @@ torch.nn.modules.conv._ConvNd.reset_parameters??
 
 所以卷积层的初始化操作：请注意，它除以**math.sqrt(5)**，结果不是很好。
 
-用的是kaiming_uniform这是普通的kaiming_norm基本相同，但是$\sqrt{5}$，这个$\sqrt{5}$貌似没有文献记录的有，这个$\sqrt{5}$ seems to work pretty badly，所以看源代码是非常有用的。
+用的是kaiming_uniform这是普通的kaiming_norm基本相同，但是$\sqrt{5}$，这个$\sqrt{5}$貌似没有文献记录的有，这个$\sqrt{5}$ ==seems to work pretty badly==，所以看源代码是非常有用的。
 
 ```python
 # Source:
@@ -1162,6 +1238,11 @@ def forward_and_backward(inp, targ):
 
 loss基本上在梯度中没有出现，在反向传播中没有用到。
 
+- 误差反向传播
+- 权重通过误差的反向传播来更新
+
+![](Snipaste_2021-09-29_16-52-36.png)
+
 ### 测试和比较与`pytorch`版本
 
 ```python
@@ -1270,6 +1351,10 @@ class Model():
         for l in reversed(self.layers): 
             l.backward()
 ```
+#### 理解反向传播公式
+
+
+
 #### 让我们训练
 
 ```python
@@ -1449,5 +1534,4 @@ s
 CPU times: user 183 ms, sys: 6.87 ms, total: 190 ms
 Wall time: 33.8 ms
 ```
-
 
