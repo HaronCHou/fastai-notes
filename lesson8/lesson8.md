@@ -1215,7 +1215,8 @@ def relu_grad(inp, out):
 
 # 线性层的梯度求法：
 def lin_grad(inp, out, w, b):
-    # grad of matmul with respect to input
+    # grad of matmul with respect to input 
+    # 见下面的图示
     inp.g = out.g @ w.t()
     w.g = (inp.unsqueeze(-1) * out.g.unsqueeze(1)).sum(0)
     b.g = out.g.sum(0)
@@ -1240,6 +1241,8 @@ loss基本上在梯度中没有出现，在反向传播中没有用到。
 
 - 误差反向传播
 - 权重通过误差的反向传播来更新
+- 需要通过如下的图示，来理解一下上述 linear_grad里面的两行代码
+- `inp.g = out.g @ w.t()` ==正如何凯明所说：paper2015，反向传播也是矩阵乘法，只是乘以的是矩阵的转置==
 
 ![](Snipaste_2021-09-29_16-52-36.png)
 
