@@ -132,6 +132,8 @@ stats(f1(x))
 
 https://blog.csdn.net/chaosir1991/article/details/106910668
 
+![](Snipaste_2021-10-11_09-20-02.png)
+
 ==两个独立的随机变量的乘积的方差为：$D(XY)=D(X)D(Y)+D(X)E(Y)^2+D(Y)E(X)^2$。假设X和Y是独立的标准正太分布，有：$D(XY)=1$。==
 
 - 我们开始尝试写自己的kaiming_normal function。
@@ -352,6 +354,7 @@ x.mean(),x.std()
 ### scaling的神奇数字
 
 - Xavier 初始化，他告诉我们应该用 `1/math.sqrt(n_in)` 其中`n_in` 是矩阵的输入个数
+- https://blog.csdn.net/shuzfan/article/details/51338178 深度学习——Xavier初始化方法
 
 ```python
 import math
@@ -916,6 +919,10 @@ loss_func(model(xb), yb), accuracy(model(xb), yb)
 
 ### nn.Sequential
 
+<img src="Snipaste_2021-10-12_13-17-30.png" style="zoom:80%;" />
+
+<img src="Snipaste_2021-10-12_13-18-17.png" style="zoom:80%;" />
+
 ```python
 model = nn.Sequential(nn.Linear(m,nh), nn.ReLU(), nn.Linear(nh,10))
 fit()
@@ -935,10 +942,13 @@ Sequential(
 
 ### Optim
 
+对fit()进一步简化：
+
 - 这就是重构的模型。优化步骤呢？让我们替换我们之前手动编码的优化步骤：
 - Jeremy 想通过创建`Optimizer`类来隐藏这部分代码。
 
 ```python
+# 将如下这些步骤进一步简化：
 with torch.no_grad():
     for p in model.parameters(): p -= p.grad * lr
     model.zero_grad()
@@ -957,7 +967,8 @@ opt.zero_grad()
 
 ```python
 class Optimizer():
-    def __init__(self, params, lr=0.5): self.params,self.lr=list(params),lr
+    def __init__(self, params, lr=0.5): 
+        self.params,self.lr=list(params),lr
         
     def step(self):
         with torch.no_grad():
@@ -971,7 +982,7 @@ model = nn.Sequential(nn.Linear(m,nh), nn.ReLU(), nn.Linear(nh,10))
 训练循环现在是：
 
 ```python
-opt = Optimizer(model.parameters())
+opt = Optimizer(model.parameters()) # 将参数传递给Optimizer
 
 for epoch in range(epochs):
     for i in range((n-1)//bs + 1):
@@ -979,12 +990,12 @@ for epoch in range(epochs):
         end_i = start_i+bs
         xb = x_train[start_i:end_i]
         yb = y_train[start_i:end_i]
-        pred = model(xb)
-        loss = loss_func(pred, yb)
+        pred = model(xb)	# 预测
+        loss = loss_func(pred, yb) # loss
 
-        loss.backward()
-        opt.step()
-        opt.zero_grad()
+        loss.backward()		# 反向传播
+        opt.step()			# 参数更新
+        opt.zero_grad()		# 梯度归零
 ```
 
 pytorch中也已经有了相应的代码，为optim.SGD，SGD里面做了很多事情，如Weight decay， Momentum等。
@@ -993,7 +1004,7 @@ pytorch中也已经有了相应的代码，为optim.SGD，SGD里面做了很多�
 #export
 from torch import optim
 
-optim.SGD.step??
+optim.SGD.step?? # 去看一下optim的SGD里面的step的函数做了哪些事情
 ```
 
 ```python
@@ -1049,6 +1060,7 @@ xb,yb = train_ds[i*bs : i*bs+bs]
 ```python
 #export
 class Dataset():
+    # 纯python 没有从任何地方继承类
     def __init__(self, x, y): self.x,self.y = x,y
     def __len__(self): return len(self.x)
     def __getitem__(self, i): return self.x[i],self.y[i]
@@ -1101,7 +1113,7 @@ for i in range((n-1)//bs + 1):
 
 然后我们用一行代码来替换：`for xb,yb in train_dl:`
 
-可能很多人都没有见过 yield 之前它是一个非常有用的概念 如果你真的很感兴趣 它是一个相当的共同例程 它基本上是一个非常有趣的想法，你可以拥有一个不只返回一件事的函数一旦它可以返回很多东西，你可以多次要求它，所以这些迭代器在 python 中的工作方式是，当你调用它时，它基本上返回一些东西，然后你可以多次调用 next 和每次你调用 next 时，它都会从产生的结果中返回下一个东西，所以我没有时间在这里详细解释协程，但它确实值得查找和学习，我们将使用它们很多它们是非常有价值的东西，而且不仅仅是对于数据科学，它们对于诸如网络编程 Web 应用程序之类的东西非常方便，因此非常值得熟悉 Python 中的 yield 并且现在大多数编程语言都有这样的东西,因此您可以将其带到任何地方。
+可能很多人都没有见过 yield 之前它是一个非常有用的概念 如果你真的很感兴趣 它是一个相当的共同例程 它基本上是一个非常有趣的想法，你可以拥有一个不只返回一件事的函数一旦它可以返回很多东西，你可以多次要求它，所以这些迭代器在 python 中的工作方式是，当你调用它时，它基本上返回一些东西，然后**==你可以多次调用 next 和每次你调用 next 时，它都会从产生的结果中返回下一个东西，==**所以我没有时间在这里详细解释协程，但它确实值得查找和学习，我们将使用它们很多它们是非常有价值的东西，而且不仅仅是对于数据科学，它们对于诸如网络编程 Web 应用程序之类的东西非常方便，因此非常值得熟悉 Python 中的 yield 并且现在大多数编程语言都有这样的东西,因此您可以将其带到任何地方。
 
 因为我们在没有潜入的情况下做到了非常深入地了解正在发生的事情，从我们的数据集中返回一件事，数据集返回两件事，因为这是我们放入其中的内容，所以我们希望得到两件事，我们可以检查这两件事的大小是否合适。
 
@@ -1124,6 +1136,8 @@ tensor(3)
 ```
 
 看起来不错所以这与我们将要得到的一样整洁这是非常漂亮的它是您可以想到的所有步骤。通过每个epoch，通过每个batch，获取独立的自变量，计算预测，计算损失，计算梯度，使用学习率更新梯度，重置梯度，这样您就知道您想要到达的位置是你可以以一种非常直观的方式阅读你的代码以挖掘专家，直到你到达那个点，我发现真的很难真正维护代码并理解代码，这是进行研究的技巧以及这不仅仅是因为硬核软件工程 不能对他们的代码做这些事情的研究不能正确地进行研究，因为如果你想到一些你想尝试的东西，你不知道怎么做，或者它需要数周时间，或者如果有你不知道的错误，所以你希望你的代码非常漂亮，我认为这是漂亮的代码，这些数据集和数据加载器与 PI torch 使用的抽象相同，所以让我们深入研究一下。
+
+- **最终简洁的代码如下所示：**
 
 ```python
 model,opt = get_model()
@@ -1180,7 +1194,11 @@ s = Sampler(small_ds,3,True)
 [tensor([8, 0, 3]), tensor([5, 1, 2]), tensor([7, 6, 4]), tensor([9])]
 ```
 
-所以现在我们有了这些，我们现在可以用我们传递采样器的东西替换我们的数据加载器，然后我们在采样器中循环4秒所以它会循环通过这些正确和很酷的东西，是因为我们使用了 yield 。这些只有当我们要求时才计算，并不是预先计算的。所以我们可以在真正的大数据集上使用这些，没问题，所以这是一个常见的事情是你实际上循环通过一些本身用于协同程序的东西，然后产生一些可以做其他事情的东西，所以这就像一种非常好的进行流式计算 steaming computations的方式，它是懒惰地完成的，你不会用完内存，这是做事情的非常巧妙的方式，然后我们将抓住该样本中的所有索引，我们将获取该索引处的数据集，所以现在我们有一个list of tensors，然后我们需要某种方法将它们全部调用为一个single Tensor，所以我们已经创建了一个名为 collate的函数，它只抓取 XS 和 Y 并将它们堆叠起来，因此 Torch Stack 只抓取一堆张量并将它们粘在一个新轴上，您可能想要做不同的事情，例如添加一些填充或您知道诸如这样你就可以传入不同的集合，如果你想要，它会将它存储起来并立即使用。
+所以现在我们有了这些，我们将sampler作为参数传递给dataloader，然后再sampler中遍历，所以它会循环通过这些正确和很酷的东西，是因为我们使用了 yield 。
+
+- 这些只有当我们要求时才计算，并不是预先计算的。所以我们可以在真正的大数据集上使用这些，没问题，所以这是一个常见的事情是你实际上循环通过一些本身用于协同程序的东西，然后产生一些可以做其他事情的东西，所以这就像一种非常好的进行流式计算 steaming computations的方式，它是懒惰地完成的，你不会用完内存，这是做事情的非常巧妙的方式，
+- 然后我们将抓住该样本中的所有索引，我们将获取该索引处的数据集，所以现在我们有一个list of tensors，然后我们需要某种方法将它们全部调用为一个single Tensor，所以我们已经创建了一个名为 collate的函数，它只抓取 XS 和 Y 并将它们堆叠起来，因此 Torch Stack 只抓取一堆张量并将它们粘在一个新轴上，您可能想要做不同的事情，例如添加一些填充或您知道诸如这样你就可以传入不同的集合，如果你想要，它会将它存储起来并立即使用。
+- 除了sampler可以作为dataloader的参数，一些数据集的增广操作如transform也可以给到collate作为参数给dataloader
 
 ```python
 def collate(b):
@@ -1188,10 +1206,10 @@ def collate(b):
     return torch.stack(xs),torch.stack(ys)
 
 class DataLoader():
-    def __init__(self, ds, sampler, collate_fn=collate):
+    def __init__(self, ds, sampler, collate_fn=collate):# 给dataloader传递一个sampler
         self.ds,self.sampler,self.collate_fn = ds,sampler,collate_fn
         
-    def __iter__(self):
+    def __iter__(self): # 在sampler中遍历
         for s in self.sampler: yield self.collate_fn([self.ds[i] for i in s])
 ```
 
@@ -1256,11 +1274,11 @@ loss,acc
 from torch.utils.data import DataLoader, SequentialSampler, RandomSampler
 ```
 
-您可以看到它使用完全相同的参数，我们甚至可以传入确切的参数我们刚刚编写的 collate 函数。它必须使用SequentialSampler来传入，与我们的shuffle=true的API接口不太相同。这就是 pytorch数据加载器在大多数时候所做的事情，你不需要编写自己的采样器和自己的整理函数的灵活性，所以你可以通过在 shuffle 中，它将使用默认的采样器和整理功能，它们的工作方式与我们刚刚展示的一些我们没有在pytorch数据加载器中实现的东西是一样的。
+您可以看到它使用完全相同的参数，我们甚至可以传入确切的参数我们刚刚编写的 collate 函数。它必须使用Sequential Sampler来传入，与我们的shuffle=true的API接口不太相同。这就是 pytorch数据加载器在大多数时候所做的事情，你不需要编写自己的采样器和自己的整理函数的灵活性，所以你可以通过在 shuffle 中，它将使用默认的采样器和整理功能，它们的工作方式与我们刚刚展示的一些我们没有在pytorch数据加载器中实现的东西是一样的。
 
 ```python
-train_dl = DataLoader(train_ds, bs, sampler=RandomSampler(train_ds), collate_fn=collate)
-valid_dl = DataLoader(valid_ds, bs, sampler=SequentialSampler(valid_ds), collate_fn=collate)
+train_dl = DataLoader(train_ds, bs, sampler=RandomSampler(train_ds), collate_fn=collate) # 带shuffle的使用 randomsampler
+valid_dl = DataLoader(valid_ds, bs, sampler=SequentialSampler(valid_ds), collate_fn=collate) # 不shuffle的 valid使用序列sampler
 ```
 
 ```python
@@ -1298,6 +1316,7 @@ loss,acc
 - 应该始终有一个validation dataset，以便确定是否过拟合。
 - 这个训练循环还包括验证。我们在每个 epoch 结束时计算并打印验证损失。
 - 请注意，我们总是在训练之前调用`model.train()`，在推理之前调用 model.eval()，因为它们被 nn.BatchNorm2d 和 nn.Dropout 等层使用，以确保这些不同阶段的适当行为。
+  - 比如：batchnorm2d和nn.Dropout只有在训练时做。
 - `model.train()`而`model.eval()`看起来复杂，但它仅设置`training`模型对象内部参数为真或假。为什么我们需要这个？无论是训练还是测试，某些层都有不同类型的行为。例如，当我们进行验证时，dropout 不会删除任何值，因为那太愚蠢了。
 
 ```python
@@ -1313,7 +1332,7 @@ def fit(epochs, model, loss_func, opt, train_dl, valid_dl):
             opt.zero_grad()
 
         model.eval()
-#         print(model.training)
+#         print(model.training) 
 #	validation，不执行梯度下降和优化器，只执行推理，获取预测和损失，并跟踪loss和accuracy的变化
         with torch.no_grad():
             tot_loss,tot_acc = 0.,0.
@@ -1336,7 +1355,7 @@ def fit(epochs, model, loss_func, opt, train_dl, valid_dl):
 #export
 def get_dls(train_ds, valid_ds, bs, **kwargs):
     return (DataLoader(train_ds, batch_size=bs, shuffle=True, **kwargs),
-            DataLoader(valid_ds, batch_size=bs*2, **kwargs))
+            DataLoader(valid_ds, batch_size=bs*2, **kwargs)) # valid_batchsize * 2，因为不做反向传播，所以内存空间可以大一些
 ```
 
 现在获取数据和拟合模型，可以用三行代码就解决了！
@@ -1365,193 +1384,931 @@ assert acc>0.9
 
   如果我们没有将梯度归零，那么下次我们通过并说丢失我们的反向时会发生什么，它现在会将新的梯度添加到那些现有的梯度中 为什么会发生这种情况，因为我们经常有很多梯度的来源，你知道有很多不同的模块都连接在一起，所以它们从许多不同的地方得到它们的梯度，它们都必须加起来，所以当我们向后调用时，我们不希望向后将梯度归零，因为那样我们将失去这种将很多东西插入在一起并让它们工作的能力，这就是为什么我们需要这里的梯度零，所以你知道这是答案的一部分。
 
-  ![image-20211006212044572](C:\Users\HaronChou\AppData\Roaming\Typora\typora-user-images\image-20211006212044572.png)
-
   我们本来可以写成下面这样
 
-  ![image-20211006212340157](C:\Users\HaronChou\AppData\Roaming\Typora\typora-user-images\image-20211006212340157.png)
+  ![](Snipaste_2021-10-12_15-12-58.png)
+
+  - 我们为什么要step和zero_grad分开写呢？
+    - 因为我们可以选择不做zero_grad。
+    - 比如在超分辨的任务上，输出为2K，一次在GPU上只能放2个image，batch=2获得的梯度的稳定性太差了，需要使用更大的batch，此时就需要将梯度累计，才能实现更大的batch的效果。这样就可以选择不做zero_grad。所以在optim中要将step和zero_grad给分开来做。
 
 ```python
-
+if i%2:
+    opt.step()
+    opt.zero_grad()
 ```
 
-s
+#### 无限可自定义的训练loop
+
+到目前为止，我们的train loop在`fit`上面的函数中。我们需要一个代码设计，用户可以无限地自定义这个循环来添加他们想要的任何东西，比如花哨的进度条、不同的优化器、tensorboard集成、正则化等。库设计需要足够开放和灵活，以处理任何不可预见的扩展。有一个很好的方法来构建可以处理这个问题的东西 -**回调**。
+
+![](Snipaste_2021-10-12_15-30-04.png)
+
+- 基本的train loop就是在这四个简单步骤中循环，model, loss, grad, step……
+
+![](Snipaste_2021-10-12_15-31-16.png)
+
+- 比如想要增加一些进度条、可视化的东西等
+
+- 现在我们有一个很好的训练循环，但我们仍然可以做一些事情：
+
+  - 更精美地绘制损失和指标 loss和metrics
+  - 超参数调度 parameters tune
+  - 添加正则化技术 regulation
+  - 还有更多……
+
+  我们可能想要使用很多修改，并且总是为每个任务创建一个训练循环并不明智。这个问题的解决方案是**callbacks**。
+
+  下面是各种正则化技术：
+
+  ![](Snipaste_2021-10-12_15-33-35.png)
+
+  混合精度训练：利用tensor的优势，训练更快。
+
+  你可能在训练中需要更多的调整来做train loop。
+
+  - 那么你如何添加更复杂的东西呢？
+
+  ![](Snipaste_2021-10-12_15-34-34.png)
+
+- 甚至是更复杂的训练：如GANs
+
+- ![](Snipaste_2021-10-12_15-36-59.png)
+
+所以要么为每一种新的训练，重写一个train loop。所以一种方法是为你想要训练的每一种可能的方式编写一个训练循环，这尤其成问题，当你开始喜欢将多个不同的调整组合在一起时，就像你喜欢剪切和粘贴一样，所以这肯定不适用于fastai，是我为fastai0.7所尝试的。
+
+![](Snipaste_2021-10-12_15-30-04.png)
+
+- 现在可以使用回调 call back
+
+- **个库都有回调的东西，但没有其他人有像我们的回调那样的回调，你会明白我的意思。**我们的回调让你不仅可以查看而且完全自定义这些步骤中的每一个
+
+  ![](Snipaste_2021-10-12_15-44-22.png)
+
+  - 这是第一个版本的fastAi，有完全相同的代码行加上一堆对回调的调用。
+
+  ![](Snipaste_2021-10-12_15-42-56.png)
+
+  - 这就是可定制的训练循环的样子
+
+  回调基本上与函数相同。问题是我们希望可以向这些地方添加代码，但我们不想修改原始代码。通过回调，我们可以修改例如 on_epoch_begin 函数，而不是将该代码直接写入 fit 函数。
+
+  ![](Snipaste_2021-10-12_15-45-46.png)
+
+  - 这里有一些回调，正如你所看到的，每个回调都有一些目的，然后我们只是修改函数来像我们想要的那样工作。
+
+  ![](Snipaste_2021-10-12_15-49-00.png)
+
+- 所以有了这些之后，我们可以更快地创建和创建各种东西，比如学习率调度器、提前停止、并行或梯度裁剪。您也可以将它们混合在一起。
+
+#### 举例说明：我们如何做GANs？
+
+![](Snipaste_2021-10-12_15-49-51.png)
+
+![](Snipaste_2021-10-12_16-02-16.png)
+
+- 创建另一个回调，可以在generate和critic两个模式中切换。
+
+`04_callbacks.ipynb`
+
+*本课的下一部分将构建处理回调的框架。很难写成笔记，因为它的代码量很大。我将对设计决策做一些一般性的描述。然后我将继续讨论在这个框架中使用的回调的实现。我建议只观看[课程](https://youtu.be/AcA8HAYh7IE?t=4976)并通过[笔记本进行操作](https://github.com/fastai/course-v3/blob/master/nbs/dl2/04_callbacks.ipynb)。*
 
 ```python
-
+x_train,y_train,x_valid,y_valid = get_data()
+train_ds,valid_ds = Dataset(x_train, y_train),Dataset(x_valid, y_valid)
+nh,bs = 50,64
+c = y_train.max().item()+1
+loss_func = F.cross_entropy
 ```
 
-s
+这是之前的fit函数的样子：
+
+Jeremy 指出拥有这么多参数很复杂，将所有这些存储到一个对象中会更容易。这就是我们希望我们的 fit 函数的样子：`fit(1, learn)`
+
+- 这将允许我们在代码的其他地方调整训练循环内发生的事情，因为`Learner`对象将是可变的，因此在我们的训练循环中将看到在其他地方更改其任何属性。
+- 把model, loss_func, opt, train_dl, valid_dl这些全部放在 learn里面打包起来。
+
+所以我们想要创建一个包含所有这些信息的学习对象。让我们先从创建**DataBunch**来存储**DataLoader**开始
 
 ```python
-
+#export
+class DataBunch():
+    def __init__(self, train_dl, valid_dl, c=None):
+        self.train_dl,self.valid_dl,self.c = train_dl,valid_dl,c
+        
+    @property
+    def train_ds(self): return self.train_dl.dataset
+        
+    @property
+    def valid_ds(self): return self.valid_dl.dataset
+data = DataBunch(*get_dls(train_ds, valid_ds, bs), c)
 ```
+然后让我们为模型创建创建一个函数，我们有一个很好的类，我们称之为Learner.
+```python
+#export
+def get_model(data, lr=0.5, nh=50):
+    m = data.train_ds.x.shape[1]
+    model = nn.Sequential(nn.Linear(m,nh), nn.ReLU(), nn.Linear(nh,data.c))
+    return model, optim.SGD(model.parameters(), lr=lr)
 
-s
+class Learner():
+    def __init__(self, model, opt, loss_func, data):
+        self.model,self.opt,self.loss_func,self.data = model,opt,loss_func,data
+```
 
 ```python
-
+learn = Learner(*get_model(data), loss_func, data)
 ```
-
-s
 
 ```python
+def fit(epochs, learn):
+    for epoch in range(epochs):
+        learn.model.train()
+        for xb,yb in learn.data.train_dl:
+            loss = learn.loss_func(learn.model(xb), yb)
+            loss.backward()
+            learn.opt.step()
+            learn.opt.zero_grad()
 
+        learn.model.eval()
+        with torch.no_grad():
+            tot_loss,tot_acc = 0.,0.
+            for xb,yb in learn.data.valid_dl:
+                pred = learn.model(xb)
+                tot_loss += learn.loss_func(pred, yb)
+                tot_acc  += accuracy (pred,yb)
+        nv = len(learn.data.valid_dl)
+        print(epoch, tot_loss/nv, tot_acc/nv)
+    return tot_loss/nv, tot_acc/nv
+loss,acc = fit(1, learn)
+0 tensor(0.2194) tensor(0.9372)
 ```
 
-s
+### CallbackHandler
+
+### 训练循环地标
+
+训练循环在训练循环的重要部分之前或之后有几个关键点或地标，我们可能希望将一些功能/代码注入这些点。按运行顺序，这些是：
+
+1. 训练开始： `begin_fit`
+2. 训练结束： `after_fit`
+3. 每个epoch的开始： `begin_epoch`
+4. 一个batch的开始： `begin_batch`
+5. 计算损失后： `after_loss`
+6. 执行反向传播后： `after_backward`
+7. 在优化器执行了一个步骤之后： `after_step`
+8. 在所有批次之后和验证之前： `begin_validate`
+9. 每个时期的结束： `after_epoch`
+10. 训练结束： `after_fit`
+11. 同样在每个批次或时代之后，我们可能想要停止一切： `do_stop`
+
+<img src="Snipaste_2021-10-12_16-22-26.png" style="zoom:80%;" />
+
+添加回调。这是之前的train loop，我们来重构代码，并添加回调。
 
 ```python
+def one_batch(xb, yb, cb):
+    if not cb.begin_batch(xb,yb): return # 添加了这样一些回调函数
+    loss = cb.learn.loss_func(cb.learn.model(xb), yb)
+    if not cb.after_loss(loss): return
+    loss.backward()
+    if cb.after_backward(): cb.learn.opt.step()
+    if cb.after_step(): cb.learn.opt.zero_grad()
 
+def all_batches(dl, cb):
+    for xb,yb in dl:
+        one_batch(xb, yb, cb)
+        if cb.do_stop(): return
+
+def fit(epochs, learn, cb):
+    if not cb.begin_fit(learn): return
+    for epoch in range(epochs):
+        if not cb.begin_epoch(epoch): continue
+        # train dataset和valid要遍历整个batch，所以创建了一个Batch
+        all_batches(learn.data.train_dl, cb)
+        
+        if cb.begin_validate():
+            with torch.no_grad(): all_batches(learn.data.valid_dl, cb)
+        if cb.do_stop() or not cb.after_epoch(): break
+    cb.after_fit()
 ```
 
-s
+我们将创建一个回调类，其中包含我们上面定义的所有内容。
+
+面对这种情况时，一个明智的设计选择是定义一个抽象基类，该基类具有与上述所有地标（+ 方法名称）对应的方法。这些方法中的每一种都应返回 True 或 False 以指示成功/失败或其他一些停止条件。在训练循环中的每个地标处，将检查这些布尔值以查看训练循环是否应该继续。
 
 ```python
-
+class Callback():
+    def begin_fit(self, learn):
+        self.learn = learn
+        return True
+    def after_fit(self): return True
+    def begin_epoch(self, epoch):
+        self.epoch=epoch
+        return True
+    def begin_validate(self): return True
+    def after_epoch(self): return True
+    def begin_batch(self, xb, yb):
+        self.xb,self.yb = xb,yb
+        return True
+    def after_loss(self, loss):
+        self.loss = loss
+        return True
+    def after_backward(self): return True
+    def after_step(self): return True
 ```
 
-s
+然后我们需要做回调处理程序。
+
+我们希望能够将多个回调传递给训练循环，因此我们需要一个附加类来处理调用的回调集合`CallbackHandler`。它将有一个`Callback`对象集合和相同的方法，`Callback`除了它循环遍历其所有回调对象并返回一个布尔值，指示所有回调是成功还是失败。
+
+**CallbackHandler**的工作是处理多个回调，但也在某些步骤中做一些基本的事情。例如`begin_epoch`将模型更改为训练模式。它运行给它的所有回调，并且它还跟踪是否继续。
 
 ```python
+class CallbackHandler():
+    def __init__(self,cbs=None):
+        self.cbs = cbs if cbs else []
 
+    def begin_fit(self, learn):
+        self.learn,self.in_train = learn,True
+        learn.stop = False
+        res = True
+        for cb in self.cbs: res = res and cb.begin_fit(learn)
+        return res
+
+    def after_fit(self):
+        res = not self.in_train
+        for cb in self.cbs: res = res and cb.after_fit()
+        return res
+    
+    def begin_epoch(self, epoch):
+        self.learn.model.train()
+        self.in_train=True
+        res = True
+        for cb in self.cbs: res = res and cb.begin_epoch(epoch)
+        return res
+
+    def begin_validate(self):
+        self.learn.model.eval()
+        self.in_train=False
+        res = True
+        for cb in self.cbs: res = res and cb.begin_validate()
+        return res
+
+    def after_epoch(self):
+        res = True
+        for cb in self.cbs: res = res and cb.after_epoch()
+        return res
+    
+    def begin_batch(self, xb, yb):
+        res = True
+        for cb in self.cbs: res = res and cb.begin_batch(xb, yb)
+        return res
+
+    def after_loss(self, loss):
+        res = self.in_train
+        for cb in self.cbs: res = res and cb.after_loss(loss)
+        return res
+
+    def after_backward(self):
+        res = True
+        for cb in self.cbs: res = res and cb.after_backward()
+        return res
+
+    def after_step(self):
+        res = True
+        for cb in self.cbs: res = res and cb.after_step()
+        return res
+    
+    def do_stop(self):
+        try:     return self.learn.stop
+        finally: self.learn.stop = False
 ```
 
-s
+现在我们可以创建一个测试来展示这是如何工作的。
 
 ```python
-
+class TestCallback(Callback):
+    def begin_fit(self,learn):
+        super().begin_fit(learn)	# 先调用基类的构造函数
+        self.n_iters = 0			# 派生类，多了一个成员
+        return True
+        
+    def after_step(self):
+        self.n_iters += 1
+        print(self.n_iters)
+        if self.n_iters>=10: self.learn.stop = True
+        return True
+fit(1, learn, cb=CallbackHandler([TestCallback()]))
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
 ```
 
-s
+这大致就是 fastai 现在所做的（除了处理程序也可以更改和返回`xb`, `yb`, 和`loss`）。但是让我们看看我们是否可以让事情变得更简单和更灵活，这样单个类就可以访问所有内容并可以随时更改任何内容。我们传递`cb`给这么多函数的事实强烈暗示它们应该都在同一个类中！
+
+### Runner
+
+- fastai的方式，我觉得很愚蠢，还是要修复，所以Runner可能会出现在接下来的fastai版本中。
+- 我发现cb是个对象，作为参数到处在传递。这三个函数 one_batch, all_batches, fit到处都在调用，CP 是回调处理程序到处都在传递
 
 ```python
+#export
+import re
 
+_camel_re1 = re.compile('(.)([A-Z][a-z]+)')
+_camel_re2 = re.compile('([a-z0-9])([A-Z])')
+def camel2snake(name):
+    s1 = re.sub(_camel_re1, r'\1_\2', name)
+    return re.sub(_camel_re2, r'\1_\2', s1).lower()
+
+class Callback():
+    _order=0
+    def set_runner(self, run): self.run=run
+    def __getattr__(self, k): return getattr(self.run, k)
+    @property
+    def name(self):
+        name = re.sub(r'Callback$', '', self.__class__.__name__)
+        return camel2snake(name or 'callback')
 ```
 
-s
+第一个回调负责在训练或验证模式下来回切换模型，以及维护迭代计数，或迭代周期中经过的迭代百分比。
 
 ```python
+#export
+class TrainEvalCallback(Callback):
+    def begin_fit(self):
+        self.run.n_epochs=0.
+        self.run.n_iter=0
+    
+    def after_batch(self):
+        if not self.in_train: return
+        self.run.n_epochs += 1./self.iters
+        self.run.n_iter   += 1
+        
+    def begin_epoch(self):
+        self.run.n_epochs=self.epoch
+        self.model.train()
+        self.run.in_train=True
 
+    def begin_validate(self):
+        self.model.eval()
+        self.run.in_train=False
 ```
 
-s
+- 我们现在来看我们的测试回调，超级简单只是实现你需要的东西，我们从一个新的回调继承。
+- 上面的Callback中有一个_oder成员变量，选择运行回调的顺序。
+- 最后在那个笔记本中有另一种（更好的）方法来做同样的事情。Jeremy 说 Fastai 将来可能会使用它，但我不打算通过它，因为它主要只是重构上面的东西。一个重要的修改是有一个名为`_order`. 这定义了执行回调的顺序。
+- 很多时候你希望能够将行为注入到某些东西中，但是不同的东西会相互影响，例如我们将要看到的转换当我们进行数据增强时，经常需要一些东西以特定的顺序运行，所以当我添加这种可注入的行为（如回调）时，我喜欢添加一些东西，它应该以什么顺序运行，而你没有把这个放在这里，你可能已经注意到，
+- 关于callback的另一件好事：getattr，它只在 Python 找不到您要求的属性时才调用。所以它永远不会到达`__getattr__`这里。
+  - 如果到了这里，意味着python找不到。
+  - 所以你真正想要的回调实际上是在 runner 里面
+- callback有一个name属性，camel格式转化为snake格式。
+  - 在Runner中传入的任何回调函数，都用来创建新的回调。实际上分配给相应的属性。
 
 ```python
+class TestCallback(Callback):
+    _order = 1
+    def after_step(self):
+        if self.train_eval.n_iters>=10: return True
+        
+cbname = 'TrainEvalCallback'
+camel2snake(cbname)
+------------
+'train_eval_callback'
 
+TrainEvalCallback().name
+-------------
+'train_eval'
+
+#export
+from typing import *
+
+def listify(o):
+    if o is None: return []
+    if isinstance(o, list): return o
+    if isinstance(o, str): return [o]
+    if isinstance(o, Iterable): return list(o)
+    return [o]
 ```
 
-s
+- Runner是一个新的类，这个 self 字符串可能看起来有点奇怪，但再看看我们之前的代码 可怕的代码气味是很多重复的代码，到处都是cb。
+- 代码重复意味着多余开销，所以把它拿出来，分解为`__call__`，它让你把一个对象当作一个函数。
+- 我不喜欢的另一件事是我所有的回调都必须继承自callback，因为如果他们没有，那么他们就会丢失这些方法之一，所以当它试图调用该方法时，他们会抛出异常，我不喜欢强迫人们必须继承某些东西他们应该能够做任何他们喜欢的事情。所以我们在这里做了什么 所以我们在这里做的是我们使用了 get 属性，它是 Python 的东西，它说查看这个对象内部并尝试找到这个名字的东西，例如开始验证并默认为无如果你找不到它，那么它会尝试o 找到那个回调，如果回调不存在，那将没有，如果你找到它，那么你可以调用它，所以这是调用任何回调的好方法。
 
 ```python
+#export
+class Runner():
+    def __init__(self, cbs=None, cb_funcs=None):
+        # 罗列出callbacks中所有的回调函数
+        cbs = listify(cbs)
+        for cbf in listify(cb_funcs):
+            cb = cbf()
+            # 设定self的cb.name为cb self.cb.name = cb
+            setattr(self, cb.name, cb)
+            cbs.append(cb)
+        # self.cbs = cbs, 从callback中找到所有的。
+        # self不仅存了每一个callback函数的名字，还用cbs去存了所有的callbacknames
+        self.stop,self.cbs = False,[TrainEvalCallback()]+cbs
 
+    @property
+    def opt(self):       return self.learn.opt
+    @property
+    def model(self):     return self.learn.model
+    @property
+    def loss_func(self): return self.learn.loss_func
+    @property
+    def data(self):      return self.learn.data
+
+    def one_batch(self, xb, yb):
+        self.xb,self.yb = xb,yb
+        if self('begin_batch'): return
+        self.pred = self.model(self.xb)
+        if self('after_pred'): return
+        self.loss = self.loss_func(self.pred, self.yb)
+        if self('after_loss') or not self.in_train: return
+        self.loss.backward()
+        if self('after_backward'): return
+        self.opt.step()
+        if self('after_step'): return
+        self.opt.zero_grad()
+
+    def all_batches(self, dl):
+        self.iters = len(dl)
+        for xb,yb in dl:
+            if self.stop: break
+            self.one_batch(xb, yb)
+            self('after_batch')
+        self.stop=False
+
+    def fit(self, epochs, learn):
+        self.epochs,self.learn = epochs,learn
+
+        try:
+            for cb in self.cbs: cb.set_runner(self)
+            if self('begin_fit'): return
+            for epoch in range(epochs):
+                self.epoch = epoch
+                if not self('begin_epoch'): self.all_batches(self.data.train_dl)
+
+                with torch.no_grad(): 
+                    if not self('begin_validate'): self.all_batches(self.data.valid_dl)
+                if self('after_epoch'): break
+            
+        finally:
+            self('after_fit')
+            self.learn = None
+
+    def __call__(self, cb_name):
+        # 在self.cbs中去排序，排序名称用_order排序
+        for cb in sorted(self.cbs, key=lambda x: x._order):
+            f = getattr(cb, cb_name, None)
+            # 根据order的顺序逐个调用f和f()， if you find f, You can call it。 找到了就执行
+            if f and f(): return True
+        return False
 ```
 
-s
+![](Snipaste_2021-10-12_16-37-06.png)
+
+回调`cb`作为训练循环中每个函数的参数传递。这表明这些函数应该是类的一部分，并且`cb`应该是该类中的实例属性。
+
+我们创建一个新类`Runner`（我这里就不一一列举），其中包含`one_batch`，`all_batches`以及`fit`从训练循环方法，采用列表`Callback`在构造函数的对象，同时还整合了先前的逻辑`CallbackHandler`类。
+
+它有一些巧妙的重构，以便通过覆盖处理回调循环`__call__`，在其集合中查找具有所需方法名称（例如“ `begin_epoch`”）的所有回调并调用它们。启动和停止的布尔逻辑也由这个方法处理，这意味着`Callback`子类不再需要返回布尔值——它们可以直接完成自己的工作，而无需知道使用它们的上下文。以下是`Callback`此实现中的 a 示例：
 
 ```python
-
+class ChattyCallback(Callback):
+    def begin_epoch(self):
+        print('begin_epoch...')
+    def after_epoch(self):
+        print('after epoch...')
+    def begin_fit(self):
+        print('begin_fit...')
+    def begin_validate(self):
+        print('begin_validate...')
+>>> run = Runner(cbs=[ChattyCallback()])
+>>> run.fit(2, learn)
+begin_fit...
+begin_epoch...
+begin_validate...
+after epoch...
+begin_epoch...
+begin_validate...
+after epoch...
 ```
 
-s
+该`Runner`设计将训练循环与回调分离，这样即使训练循环的训练和验证部分所需的不同逻辑也可以实现为`Callback`硬编码到`Runner`类中的
 
 ```python
+class TrainEvalCallback(Callback):
+    def begin_fit(self):
+        self.run.n_epochs=0.
+        self.run.n_iter=0
+    
+    def after_batch(self):
+        if not self.in_train: return
+        self.run.n_epochs += 1./self.iters
+        self.run.n_iter   += 1
+        
+    def begin_epoch(self):
+        self.run.n_epochs=self.epoch
+        self.model.train()
+        self.run.in_train=True
 
+    def begin_validate(self):
+        self.model.eval()
+        self.run.in_train=False
 ```
 
-s
+*（恕我直言：`Runner`代码很难理解，但在课程的其余部分并不重要。这是一个实验类，即使在 FastAI2 库中也没有结束。查看库的状态 (2/ 2020），这个类的想法确实出现在新的`Learner`类中。最好只知道你需要编写回调）。*
+
+`Callbacks`下一节中所有实现的注意事项：
+
+- 他们假设 存在`self.in_train`，表示我们是在训练还是验证中。该变量由 设置`TrainEvalCallback`。
+- 他们也有机会在变量`Runner`类，如：`self.opt`，`self.model`，`self.loss_func`，`self.data`，`self.n_epochs`，和`self.epochs`。
+
+##### question:
+
+pytorch中的hooks和callbacks有什么区别？
+
+- 我们很快就会做 hooks ，如果想要在算模型第二层的前向传递后添加回调，我无法正确执行此操作，因为我执行前向传递的点看起来像这个自点模型或者如果我想抓住我已经如果我的倒数第二层我不能这样做，只是调用了self.model(self.xb)，没法到中间过程中去调用回调函数，
+- 同样，反向传播中也不能这样做。`self.loss.backward()`，没法在pytorch的中间函数中去加回调函数
+- pytorch hooks callbacks可以添加到特定的Pytorch模块，我们将很快就会看到它们，它可能是下一个
 
 ```python
+#export
+class AvgStats():
+    def __init__(self, metrics, in_train): self.metrics,self.in_train = listify(metrics),in_train
+    
+    def reset(self):
+        self.tot_loss,self.count = 0.,0
+        self.tot_mets = [0.] * len(self.metrics)
+        
+    @property
+    def all_stats(self): return [self.tot_loss.item()] + self.tot_mets
+    @property
+    def avg_stats(self): return [o/self.count for o in self.all_stats]
+    
+    def __repr__(self):
+        if not self.count: return ""
+        return f"{'train' if self.in_train else 'valid'}: {self.avg_stats}"
 
+    def accumulate(self, run):
+        # 计算loss
+        bn = run.xb.shape[0]
+        self.tot_loss += run.loss * bn
+        self.count += bn
+        for i,m in enumerate(self.metrics):
+            self.tot_mets[i] += m(run.pred, run.yb) * bn
+
+# 创建了新的callback，
+class AvgStatsCallback(Callback):
+    def __init__(self, metrics):
+        self.train_stats,self.valid_stats = AvgStats(metrics,True),AvgStats(metrics,False)
+        
+    def begin_epoch(self):
+        self.train_stats.reset()
+        self.valid_stats.reset()
+        
+    def after_loss(self):
+        stats = self.train_stats if self.in_train else self.valid_stats
+        with torch.no_grad(): stats.accumulate(self.run)
+    
+    # epoch结束之后，打印出统计信息
+    def after_epoch(self):
+        print(self.train_stats)
+        print(self.valid_stats)
 ```
-
-s
 
 ```python
-
+learn = Learner(*get_model(data), loss_func, data)
 ```
-
-s
 
 ```python
-
+stats = AvgStatsCallback([accuracy])
+run = Runner(cbs=stats)
 ```
-
-s
 
 ```python
-
+run.fit(2, learn)
+-----------------------------
+train: [0.31116248046875, tensor(0.9052)]
+valid: [0.141587158203125, tensor(0.9587)]
+train: [0.144049990234375, tensor(0.9572)]
+valid: [0.2177901611328125, tensor(0.9354)]
 ```
-
-s
 
 ```python
-
+loss,acc = stats.valid_stats.avg_stats
+assert acc>0.9
+loss,acc
+-------------------
+(0.2177901611328125, tensor(0.9354))
 ```
 
-s
+- questionc：`__call__`在第一个回调返回 true 时提前退出，为什么？
+  - 这是我注意到的一件事在我编写回调处理程序的第一种方式中真的很烦人，因为我有它，所以必须返回某些东西必须返回 true 表示继续，所以基本上 false 意味着停止，这真的很尴尬，因为如果你不添加 return在
 
 ```python
-
+#export
+from functools import partial
 ```
-
-s
 
 ```python
-
+# 含有callback的function
+acc_cbf = partial(AvgStatsCallback,accuracy)
 ```
-
-s
 
 ```python
-
+run = Runner(cb_funcs=acc_cbf)
 ```
-
-s
 
 ```python
-
+run.fit(1, learn)
+train: [0.109901865234375, tensor(0.9663)]
+valid: [0.12098992919921875, tensor(0.9649)]
 ```
-
-s
 
 ```python
-
+run.avg_stats.valid_stats.avg_stats
+-------------
+[0.12098992919921875, tensor(0.9649)]
 ```
 
-s
+tips: Jeremy 经历的大部分事情都不是那么重要。我建议至少阅读一次回调笔记本并尝试了解它是如何工作的。Jeremy 说这是给那些对软件工程感兴趣的人准备的。就我个人而言，这对我来说很难理解，因为有很多活动部件。你有回调处理程序，回调，然后你需要做其他事情。我可能会写一篇关于这个的教程，因为我有兴趣更好地理解它。我想分享的一个好技巧是打印这些代码。有时，当某些代码在屏幕之外时，很难在计算机上看到东西。将整个代码贴在墙上并记下标记或其他东西，以便您可以突出显示最重要的部分并添加一些注释。这就是我理解复杂代码的方式。
+
+- 更多示例：[https](https://docs.fast.ai/callbacks.html) : [//docs.fast.ai/callbacks.html](https://docs.fast.ai/callbacks.html)
+
+在本课程的第二部分中的很多事情你可以选择做不同事情的深度。我认为我们的回调方法非常有趣，如果你也这样做，你可能想要深入这里并真正研究，你知道什么您可以构建的回调类型以及您可以用它们做什么我们尚未完成的事情，**但是如果您对软件工程的细节不那么感兴趣，那么您就会知道很多关于我如何做到这一点的细节可能是你不太关心的事情**，这很好，最重要的是每个人都应该知道这是我们的训练循环，所以你知道其他的事情，比如我们是如何创建我们的平均统计回调的，以及确切地说 dunder call 绘制了相当小的细节，但你应该认识到 fit 函数存储了多少epoch，正在做我们正在使用的学习者每次正确地调用每个不同的回调，
+
+
+
+### 05_anneal.ipynb
+
+- 同样，我认为从笔记本中复制代码不是一个好主意，因为没有任何新内容。它只是展示了学习率退火是如何在 Fastai 库中完成的。
+- 与其花太多时间在理解上`Runner`，不如让我们继续做一些有用的事情——实现一些回调。
+- 让我们实现回调以进行*单周期*  one epoch训练。如果你能很好地训练第一批，那么整个训练会更好，你可以获得超收敛。良好的退火对于做好前几批至关重要。
+- 首先让我们做一个回调`Recorder`，记录每批之后的学习率和损失。此调用将需要两个在训练循环中初始化的学习率和损失列表，并且需要在每批之后附加到这些列表中。
 
 ```python
+x_train,y_train,x_valid,y_valid = get_data()
+train_ds,valid_ds = Dataset(x_train, y_train),Dataset(x_valid, y_valid)
+nh,bs = 50,512
+c = y_train.max().item()+1
+loss_func = F.cross_entropy
+data = DataBunch(*get_dls(train_ds, valid_ds, bs), c)
+#export
+def create_learner(model_func, loss_func, data):
+    return Learner(*model_func(data), loss_func, data)
+learn = create_learner(get_model, loss_func, data)
+run = Runner([AvgStatsCallback([accuracy])])
 
+run.fit(3, learn)
+----------------
+train: [0.6664653125, tensor(0.8075)]
+valid: [0.302250390625, tensor(0.9146)]
+train: [0.291615546875, tensor(0.9162)]
+valid: [0.2376760986328125, tensor(0.9324)]
+train: [0.23417873046875, tensor(0.9323)]
+valid: [0.2117640869140625, tensor(0.9397)]
 ```
-
-s
 
 ```python
+# 这里的lr不一样
+learn = create_learner(partial(get_model, lr=0.3), loss_func, data)
+run = Runner([AvgStatsCallback([accuracy])])
 
+run.fit(3, learn)
+-------------
+train: [0.762880078125, tensor(0.7988)]
+valid: [0.36490234375, tensor(0.8969)]
+train: [0.3508654296875, tensor(0.9002)]
+valid: [0.30942646484375, tensor(0.9107)]
+train: [0.30202353515625, tensor(0.9126)]
+valid: [0.26613701171875, tensor(0.9218)]
+#export
+def get_model_func(lr=0.5): return partial(get_model, lr=lr)
 ```
 
-s
+- what is your particular debugging process?
+  - 当我运行一个单元格时出现异常然后我进入下一个单元格并键入 % debug 并且如果事情没有按我预期的方式工作，它会在调试器中弹出但它不是一个例外然后我将添加设置下划线在某个点附近的某个地方我关心的就是这点是的，我发现这在大多数情况下效果很好，然后只是看看它做了什么，一切的形状是什么，一切都像你们几个一样包含在内知道批次中的几个对象我通常会发现某些东西有 Nan 或零或其他任何东西 确实很少使用我发现调试的 bug 很难，如果是，那么这只是一个你知道的情况，离开并提出问题调整你的假设，但在调试器的帮助下，你知道你面前的所有状态，这是关于 PI 火炬的伟大之处之一是它支持这种开发.
+
+##### Annealing
+
+- 所以我们要创建一个回调来进行超参数调度，所以对于这个笔记本，我们只是将学习率作为一个超参数，但在过去的 12 个月里，真正成功的研究领域之一是人们指出：
+
+  - 我们can and should schedule everthing
+
+    - dropout amount, 什么样的数据增强， weight decay, learning rate, momentum,一切都有意义
+
+  因为在过去的 12 个月中我们一直在学习的另一件事是如何作为你训练一个模型，它经历了不同的阶段，神经网络的loss landscape 在中间开始时看起来非常不同。
+  
+- **因此您不太可能希望始终使用相同的超参数，因此能够安排任何事情非常方便，因此我们将创建一个参数安排一个回调，您只需传入一个函数即可一个参数调度**
+
+- 
+
+我们定义了两个新的callback：Recorder用于保存损失跟踪和我们预定的学习率，以及一个 ParamScheduler，它可以调度任何超参数，只要它在优化器的 state_dict 中注册即可。
+
+- 记住我告诉过你我们添加的火车 eval 回调将把它设置为一个浮点数，所以这将是这个数字
+- 接下来我们需要一个回调类，它可以`opt`根据某个调度函数根据已经过去的 epoch数来更新优化器的参数。
 
 ```python
+#export
+# 记录lr和loss
+class Recorder(Callback):
+    def begin_fit(self): self.lrs,self.losses = [],[]
 
+    def after_batch(self):
+        if not self.in_train: return
+        self.lrs.append(self.opt.param_groups[-1]['lr'])
+        self.losses.append(self.loss.detach().cpu())        
+
+    def plot_lr  (self): plt.plot(self.lrs)
+    def plot_loss(self): plt.plot(self.losses)
+
+class ParamScheduler(Callback):
+    _order=1
+    def __init__(self, pname, sched_func): 
+        self.pname,self.sched_func = pname,sched_func
+
+    def set_param(self):
+        for pg in self.opt.param_groups:
+            # epoch数，除以整的epoch个数，这个n_epochs在train的callback函数中+1
+            pg[self.pname] = self.sched_func(self.n_epochs/self.epochs)
+            
+    def begin_batch(self): 
+        if self.in_train: self.set_param()
 ```
 
-s
+- 正如part1中所讲的一样，你不想要每一层都使用相同的超参数值。所以pytorch有一些parameter group，在fastai中使用一种抽象，叫做layer_groups，基本上是一样。
+- pytorch优化器包含很多param_groups。
+
+- 然后每次我们开始你的批处理，如果我们正在训练，我们将很难知道我们的日程安排是否有效，如果我们实际上无法看到学习率发生了什么变化，那么让我们创建另一个回调线记录器，Recorder
+  - 这个看起来很熟悉，与fastai很相似的。
+
+让我们从一个简单的线性时间表开始，从开始到结束。它返回一个函数，该函数接受一个`pos`参数（从 0 到 1），使得该函数以线性方式从`start`(at `pos=0`) 到`end`(at `pos=1`)。
+
+- pos表示从start-end的中间位置，所以是一个线性表示。
+- 设置了start和end之后，只需要一个pos即可。
 
 ```python
-
+def sched_lin(start, end):
+    def _inner(start, end, pos): return start + pos*(end-start)
+    return partial(_inner, start, end)
 ```
 
-s
+接下来我们要定义一些退火函数来提高和降低学习率，如下图所示：
+
+![](Snipaste_2021-10-13_10-36-00.png)
+
+- 但是上面的表示方式不太方便，因为我们将创建许多不同的调度程序，我不想每次都必须编写所有这些。所以下面是用decorator来重构，您以自然的方式创建线性调度程序。
+- decorator返回一个函数，，Python 所做的是，如果它在这里看到一个带有 @ 符号的函数名称，它在它接受这个函数之前将它传递给这个函数，并用它返回的任何东西替换这个函数的定义。
+- 你可以利用 python 的动态特性就像如果你没有充分利用动态语言的动态特性，那么使用动态语言是没有意义的，所以像装饰器这样的东西是做这些事情的超级方便的方法，还有其他语言，比如 Julia，可以用宏做类似的事情，就像这样不是获得这种非常好的表达能力的唯一方法，但这是一种很好的方法
 
 ```python
+#export
+def annealer(f):
+    def _inner(start, end): return partial(f, start, end)
+    return _inner
 
+@annealer
+def sched_lin(start, end, pos): return start + pos*(end-start)
+# shift-tab works too, in Jupyter!
+# sched_lin()
+f = sched_lin(1,2)
+f(0.3)
+1.3
 ```
 
-s
+下面定义了不同的退火函数
+
+这些退火函数应该有一个开始和结束值以及一个介于 0 和 1 之间的位置，表示在时间表中的相对位置。当其中 2 个是常量时，我们可以将退火函数实现为抽象基类或仅使用部分函数，而不是编写一个接受所有 3 个参数的函数。这里使用了部分函数：
+
+- `annearler`是一个*装饰器*函数。装饰器接受一个函数并返回另一个函数，并具有`@decorator`Python 中的奇特语法。
 
 ```python
+#export
+def annealer(f):
+    def _inner(start, end): 
+        return partial(f, start, end)
+    return _inner
 
+@annealer
+def sched_lin(start, end, pos): 
+    return start + pos*(end-start)
+
+@annealer
+def sched_cos(start, end, pos): return start + (1 + math.cos(math.pi*(1-pos))) * (end-start) / 2
+@annealer
+def sched_no(start, end, pos):  return start
+@annealer
+def sched_exp(start, end, pos): return start * (end/start) ** pos
+
+def cos_1cycle_anneal(start, high, end):
+    return [sched_cos(start, high), sched_cos(high, end)]
+
+#This monkey-patch is there to be able to plot tensors
+torch.Tensor.ndim = property(lambda x: len(x.shape))
 ```
 
+- matplotlib无法绘制tensor，`torch.Tensor.ndim = property(lambda x: len(x.shape))`
+- 给torch的tensor指定一个新属性，就可以绘制了。
+- python的好处是，虽然不支持，但是你可以插入和替换任何东西。
+- 现在可以输出我们的四个不同的调度程序
+
+```python
+annealings = "NO LINEAR COS EXP".split()
+
+a = torch.arange(0, 100)
+p = torch.linspace(0.01,1,100)
+
+fns = [sched_no, sched_lin, sched_cos, sched_exp]
+for fn, t in zip(fns, annealings):
+    f = fn(2, 1e-2)
+    plt.plot(a, [f(o) for o in p], label=t)
+plt.legend();
+```
+
+<img src="Snipaste_2021-10-13_10-34-03.png" style="zoom:80%;" />
+
+- 我们希望将升高和降低时间表与不同时间表开始时的位置列表结合在一个函数中。这是`combine_scheds`函数：
+
+```python
+def combine_scheds(pcts, scheds):
+    assert sum(pcts) == 1.
+    pcts = tensor([0] + listify(pcts))
+    assert torch.all(pcts >= 0)
+    pcts = torch.cumsum(pcts, 0)
+    def _inner(pos):
+        idx = (pos >= pcts).nonzero().max()
+        actual_pos = (pos-pcts[idx]) / (pcts[idx+1]-pcts[idx])
+        return scheds[idx](actual_pos)
+    return _inner
+# 30% 从0.3-0.7，按照cos曲线上升；后面的70%，从0.6按照余弦曲线下降到0.2
+sched = combine_scheds([0.3, 0.7], [sched_cos(0.3, 0.6), sched_cos(0.6, 0.2)]) 
+```
+
+```python
+plt.plot(a, [sched(o) for o in p])
+[<matplotlib.lines.Line2D at 0x7f8c1cc93588>]
+```
+
+- lr的时间表如下：
+
+![](Snipaste_2021-10-13_10-38-20.png)
+
+这就是我们将传递每个阶段的时间长度以及每个阶段的日程安排，所以这是我们的工作方式，
+
+- 这就是fastai的1cycle时间表，这在其他地方应该没有发表过，但是是fastai默认的方法。
+- 您在开始时会得到一个很好的温和nice gentle warm-up start, 
+- **但是正如您在下周的课程中看到的那样，当我们使用钩子hooks深入研究事物时，它不会花费很长时间才能进入体面的部分失去了风景**，所以你可以很快地提高学习率，
+- **下周将开始看论文，人们在过去 4 个月左右的时间里已经意识到这一点，尽管莱斯利史密斯真的向我们展示了这两个几年前，但直到最近 4 个月左右，人们才真正理解了这一点以及更广泛的学术文献，您需要长时间以高学习率进行训练，**
+- 因此通过这种有指导的余弦计划，我们可以保持高水平许久 但是随后您还需要在很长一段时间内以非常低的学习率进行微调，因此它具有我们想要的所有类型的优秀功能，因此cos 1cycle 计划非常棒，我们现在可以从头开始构建它们，所以让我们尝试像这样训练，
+- 所以让我们创建一个回调函数列表，它有一个Recorder，平均统计回调，其中具有准确性，还有一个参数调度器，它使用这个调度来降低学习率，然后拟合，看起来很不错，我们正在起床很快就达到了 94%，我们现在可以绘制 LR，这是我们希望的形状，我们甚至可以说plot_loss还可以，所以我们现在真的拥有了我们需要的所有部分来尝试许多不同的方式，在训练神经网络方面，我们仍然没有研究卷积，我们将在下周做更多的事情，但你现在有能力想出很多你可能想要尝试的事情，并尝试它们
+
+```python
+cbfs = [Recorder,
+        partial(AvgStatsCallback,accuracy),
+        partial(ParamScheduler, 'lr', sched)]
+```
+
+```python
+learn = create_learner(get_model_func(0.3), loss_func, data)
+run = Runner(cb_funcs=cbfs)
+```
+
+```python
+run.fit(3, learn)
+```
+
+```
+train: [0.788337578125, tensor(0.7860)]
+valid: [0.3378462158203125, tensor(0.8999)]
+train: [0.29788216796875, tensor(0.9127)]
+valid: [0.2410066162109375, tensor(0.9319)]
+train: [0.23813974609375, tensor(0.9312)]
+valid: [0.2132032958984375, tensor(0.9400)]
+```
+
+```
+run.recorder.plot_lr()
+```
+
+![](Snipaste_2021-10-13_10-40-05.png)
+
+```python
+run.recorder.plot_loss()
+```
+
+![](Snipaste_2021-10-13_10-40-29.png)
+
+- Convnet卷积网络，使用GPU了，我们将最终使用 GPU 因为一旦我们开始建立这种规模的信心，它就会开始花费太长时间，但只需提前阅读一点，把东西放在 GPU 上需要什么。
+- 我们也将要添加一些转换，这是在没有回调的情况下进行批量转换所需的全部内容
+- 正如我们所讨论的，尽管我们无法在层之间添加回调，因此我们将首先手动添加层之间的回调，然后使用 Pytorch hooks和这样，我们将能够绘制并准确查看我们的模型在训练时发生了什么，我们将找到更好地训练它们的方法，以便在下一个笔记本结束时我们将提高 98% 以上的准确率超级酷，然后我们将深入研究批规范数据块 API 优化和转换，到那时我认为我们将基本上拥有进入一些更高级架构和训练方法所需的所有机制看看我们是如何做一些很酷的事情的，我们下周见
