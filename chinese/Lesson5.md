@@ -1101,6 +1101,12 @@ epoch的最后，我们可以说，“太棒了，这是我们的斜率，我们
 
 ### 动量（Momentum） [[1:48:40](https://youtu.be/uQtTwhpv7Ew?t=6520)]
 
+- 见李宏毅机器学习部分《Optimization》PDF，百度网盘有。
+
+![](./lesson5/Snipaste_2021-10-15_16-41-20.png)
+
+![](./lesson5/Snipaste_2021-10-15_16-42-27.png)
+
 我们可以用来加速它的第一个东西是这个叫动量的东西。还是原来那个电子表格文件。我去掉了有限差分的部分，它们用处不是很大，只留下数学分析的部分。`de/db`是存放导数的，要用导数来更新。
 
 ![](./lesson5/43.png)
@@ -1133,6 +1139,8 @@ opt = optim.SGD(model.parameters(), lr, momentum=0.9)
 动量值用0.9很普遍。对基本的问题来说，它大概都是用0.9。这就是包含了动量的SGD。还是一样，这并不是简化的版本，是全部内容。这是SGD。还是一样，你可以自己写。试着写出来。在lesson 2 SGD上添加动量是一个很好的作业。或者在这个做MNIST的notebook里不再用`optim.`，自己写一个包含动量的update函数。
 
 ### RMSProp [[1:53:30](https://youtu.be/uQtTwhpv7Ew?t=6810)]
+
+![](./lesson5/Snipaste_2021-10-15_17-25-10.png)
 
 有一个很酷的东西叫RMSProp。关于RMSProp，最酷的事情是Geoffrey Hinton提出了它，所有人都使用它。它特别流行，特别普遍。RMSProp的准确出处是Coursera在线MOOC，在那里他第一次提出了RMSProp，我喜欢这种在MOOC上出现而不是在论文里出现的新方法。
 
@@ -1194,6 +1202,8 @@ epoch  train_loss  valid_loss  accuracy
 ![](./lesson5/49.png)
 
 这些技巧产生了很大的差别，不是微小的差别。这只是一个epoch。
+
+![](./lesson5/Snipaste_2021-10-15_17-34-05.png)
 
 ### Fit one cycle [[2:00:02](https://youtu.be/uQtTwhpv7Ew?t=7202)]
 
