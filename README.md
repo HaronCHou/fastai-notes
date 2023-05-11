@@ -24,6 +24,11 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - lessson10 markdown: [lesson10 中文版笔记 md版本 ](./lesson10/lesson10.md)  [lesson10.pdf](https://github.com/HaronCHou/fastai-notes/blob/main/lesson10.pdf)
 - lessson11 markdown: [lesson11 中文版笔记 md版本 ](https://github.com/HaronCHou/fastai-notes/blob/main/lesson11/lesson11.md)   [lesson11.pdf](https://github.com/HaronCHou/fastai-notes/blob/main/lesson11.pdf)
 - lesson12 markdown: [lesson12 中文版笔记 md版本](https://github.com/HaronCHou/fastai-notes/blob/main/lesson12/Lesson%2012%20Notes%20Advanced%20training%20techniques%3B%20ULMFiT%20from%20scratch.md)  [lesson12.pdf详细](https://github.com/HaronCHou/fastai-notes/blob/main/Lesson%2012%20Notes%20Advanced%20training%20techniques%3B%20ULMFiT%20from%20scratch.pdf)
-
+------------------
+## 每日更新
+- 2023年5月11日11:46:41
+  - 看到[深度碎片](https://github.com/EmbraceLife/My_Journey_on_Kaggle/tree/main)的github和twitter
+  - 看到icevision在Fastai上的内容；看到muller在推荐使用icevision做object detection，更新了blog[icevision相关笔记](https://blog.csdn.net/haronchou/article/details/130557309)
+  - 多学习和记录
     
  
