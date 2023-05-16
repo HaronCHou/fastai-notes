@@ -26,6 +26,13 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - lesson12 markdown: [lesson12 中文版笔记 md版本](https://github.com/HaronCHou/fastai-notes/blob/main/lesson12/Lesson%2012%20Notes%20Advanced%20training%20techniques%3B%20ULMFiT%20from%20scratch.md)  [lesson12.pdf详细](https://github.com/HaronCHou/fastai-notes/blob/main/Lesson%2012%20Notes%20Advanced%20training%20techniques%3B%20ULMFiT%20from%20scratch.pdf)
 ------------------
 ## 每日更新
+
+
+- 2023年5月17日 ToDo
+  - 之前使用的是BCE_loss，改为focal_loss，试一下loss下降的情况，然后，再看下训练完成后mAP有怎样的变化呢？
+  - 再对照Jeremy之前的内容看一下效果，看看改为focal_loss之后的收益到底有多大？
+  - 还有Yolov5的效果为什么好那么多，CoCo_map都到了90%多了，why?指标不一样？还是网络真的有那么大的改善？结论和答案是什么？icevision的yolov5的v0c2007，效果好太多了，我都不知道为啥？
+
 - 2023年5月11日11:46:41
   - 看到[深度碎片](https://github.com/EmbraceLife/My_Journey_on_Kaggle/tree/main)的github和twitter
   - 2023年5月11日16:52:50 在daniel的推荐下，再次去看了Radek的《mata learning》，很神奇的只花了三个小时就完成了，翻译为中文的笔记见：[meata learning 中文翻译 How To Learn Deep Learning And Thrive In The Digital Age](https://note.youdao.com/s/N8ZKdqlo)
