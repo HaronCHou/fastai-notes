@@ -41,7 +41,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 > 1. 遇到困难，不要放弃；分解为更简单的任务来增强技能，并稍后再回来！——这个真的超级有用
   - [完成ssd fastaiv2 + mAP.ipynb](https://github.com/HaronCHou/fastai-notes/blob/main/SSD_jav.ipynb)
     - 其中，mAP还是总的计算，速度还可以的，很快，可能在于batched_nms的函数替换，效果很快；里面也有很多验证性代码，过程值得学习
-    - mAP只到 0.3671，还很小；且由于统计规律，10%的小框框根本就无法输出
+    - mAP只到 0.3671，还很小；且由于统计规律，10%的小框框根本就无法输出 见笔记本的统计结果 https://github.com/HaronCHou/fastai-notes/blob/main/SSD_Object_Detection.ipynb
 
 ------------------
 以下是深度碎片的原文：
