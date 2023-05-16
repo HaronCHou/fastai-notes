@@ -36,6 +36,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - 由于SSD训练的效果不太好，所以一开始就计算mAP意义不太大。反而是训练的差不多的时候再来计算mAP比较有意义。然后再自己去微调。
   - 学习深度碎片：https://github.com/EmbraceLife/My_Journey_on_Kaggle
   - wasimlorgat在[fastai](https://forums.fast.ai/t/introduce-yourself-here/99261/106) twitter为：[wasimlorgat](https://twitter.com/wasimlorgat/media )
+  - 博客位置：https://wasimlorgat.com/ 
 > 1. 遇到困难，不要放弃；分解为更简单的任务来增强技能，并稍后再回来！——这个真的超级有用
 
 ------------------
