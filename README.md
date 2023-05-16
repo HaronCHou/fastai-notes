@@ -31,7 +31,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - 2023年5月11日16:52:50 在daniel的推荐下，再次去看了Radek的《mata learning》，很神奇的只花了三个小时就完成了，翻译为中文的笔记见：[meata learning 中文翻译 How To Learn Deep Learning And Thrive In The Digital Age](https://note.youdao.com/s/N8ZKdqlo)
   - 看到icevision在Fastai上的内容；看到muller在推荐使用icevision做object detection，更新了blog[icevision相关笔记](https://blog.csdn.net/haronchou/article/details/130557309)
   - 多学习和记录
-- 2023年5月16日09:20:11
+- 2023年5月16日09:20:11 周二
   - 成功的经验：mAP计算的每一步要像Jeremy的pascal_muliti.ipynb那样一步步的去走；当时只是运行了Jeremy的笔记本，但是没有自己尝试去复制，所以不知道啥意思。这个很重要。『自己从头制作笔记本，并且不要作弊』，在Jeremy的课程中也有强调这一点。
   - 由于SSD训练的效果不太好，所以一开始就计算mAP意义不太大。反而是训练的差不多的时候再来计算mAP比较有意义。然后再自己去微调。
   - 学习深度碎片：https://github.com/EmbraceLife/My_Journey_on_Kaggle
@@ -39,6 +39,9 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - 博客位置：https://wasimlorgat.com/ 
   - 笔记位置：[wasimlorgat学习笔记](https://github.com/HaronCHou/fastai-notes/blob/main/wasimlorgat.md)
 > 1. 遇到困难，不要放弃；分解为更简单的任务来增强技能，并稍后再回来！——这个真的超级有用
+  - [完成ssd fastaiv2 + mAP.ipynb](https://github.com/HaronCHou/fastai-notes/blob/main/SSD_jav.ipynb)
+    - 其中，mAP还是总的计算，速度还可以的，很快，可能在于batched_nms的函数替换，效果很快；里面也有很多验证性代码，过程值得学习
+    - mAP只到 0.3671，还很小；且由于统计规律，10%的小框框根本就无法输出
 
 ------------------
 以下是深度碎片的原文：
