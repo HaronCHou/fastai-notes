@@ -31,5 +31,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - 2023年5月11日16:52:50 在daniel的推荐下，再次去看了Radek的《mata learning》，很神奇的只花了三个小时就完成了，翻译为中文的笔记见：[meata learning 中文翻译 How To Learn Deep Learning And Thrive In The Digital Age](https://note.youdao.com/s/N8ZKdqlo)
   - 看到icevision在Fastai上的内容；看到muller在推荐使用icevision做object detection，更新了blog[icevision相关笔记](https://blog.csdn.net/haronchou/article/details/130557309)
   - 多学习和记录
-    
+- 2023年5月16日09:20:11
+  - 成功的经验：mAP计算的每一步要像Jeremy的pascal_muliti.ipynb那样一步步的去走；当时只是运行了Jeremy的笔记本，但是没有自己尝试去复制，所以不知道啥意思。这个很重要。『自己从头制作笔记本，并且不要作弊』，在Jeremy的课程中也有强调这一点。
+  - 由于SSD训练的效果不太好，所以一开始就计算mAP意义不太大。反而是训练的差不多的时候再来计算mAP比较有意义。然后再自己去微调。
  
