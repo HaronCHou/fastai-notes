@@ -26,12 +26,15 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - lesson12 markdown: [lesson12 中文版笔记 md版本](https://github.com/HaronCHou/fastai-notes/blob/main/lesson12/Lesson%2012%20Notes%20Advanced%20training%20techniques%3B%20ULMFiT%20from%20scratch.md)  [lesson12.pdf详细](https://github.com/HaronCHou/fastai-notes/blob/main/Lesson%2012%20Notes%20Advanced%20training%20techniques%3B%20ULMFiT%20from%20scratch.pdf)
 ------------------
 ## 每日更新
-
+❌UnDo  ✔️Done   ⭕ToDo
 
 - 2023年5月17日 ToDo
-  - 之前使用的是BCE_loss，改为focal_loss，试一下loss下降的情况，然后，再看下训练完成后mAP有怎样的变化呢？
-  - 再对照Jeremy之前的内容看一下效果，看看改为focal_loss之后的收益到底有多大？
-  - 还有Yolov5的效果为什么好那么多，CoCo_map都到了90%多了，why?指标不一样？还是网络真的有那么大的改善？结论和答案是什么？icevision的yolov5的v0c2007，效果好太多了，我都不知道为啥？
+  - ⭕之前使用的是BCE_loss，改为focal_loss，试一下loss下降的情况，然后，再看下训练完成后mAP有怎样的变化呢？
+  - ⭕再对照Jeremy之前的内容看一下效果，看看改为focal_loss之后的收益到底有多大？
+  - ⭕还有Yolov5的效果为什么好那么多，CoCo_map都到了90%多了，why?指标不一样？还是网络真的有那么大的改善？结论和答案是什么？icevision的yolov5的v0c2007，效果好太多了，我都不知道为啥？
+  - ⭕自动驾驶qq群，有关slam的JD，以及一些行业交流，这方面也需要更open的来了解这写行业；极氪36有行业发展、分析、咨询类的文章，观点认识，需要认识整个行业，并开拓视野。
+  - 『背后的利益是指挥棒』，前端是表象/现象，不是本质的运行逻辑。（遇到困惑需要上升一个维度来思考）
+  - zeku解散，突然裁员，2000员工；达摩院自动驾驶100人并入菜鸟，裁员200，70%；再看校招薪水的公众号，全球自动驾驶缩水。（不知道结论可不可靠，需要再次多方证实）。并入菜鸟，说明赛道选的是送快递，有局限的应用领域。同时，变现能力在紧缩时代很重要。热钱。『问了几个人，大哥：熬过冬天，适合囤积；chenyang；自动驾驶群看到高仙机器人的深度学习总监，在开课，卖课。单位和买课结合；联想很多人进入AI培训领域赚热钱，怎么个想法』
 
 - 2023年5月11日11:46:41
   - 看到[深度碎片](https://github.com/EmbraceLife/My_Journey_on_Kaggle/tree/main)的github和twitter
