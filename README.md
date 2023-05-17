@@ -31,6 +31,13 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 #### 2023年5月17日 ToDo
   - [**如何打造高质量的深度学习数据集**？](https://www.zhihu.com/question/333074061)
   - [ ] 之前使用的是BCE_loss，改为focal_loss，试一下loss下降的情况，然后，再看下训练完成后mAP有怎样的变化呢？
+     - 之前使用的就已经是focal_loss了，改为bce_loss回去看看 
+     - 同时为了分析label_loss和bbox_loss，参考https://github.com/HaronCHou/fastai-notes/blob/main/SSD_mAP.ipynb 里面的做法，把label_loss和bbox_loss分别显示
+     - bce_loss和focal_loss差别如下所示：
+
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/f56e9b60-166d-4e65-85ac-a2822237b19e)
+
+
   - [ ] 再对照Jeremy之前的内容看一下效果，看看改为focal_loss之后的收益到底有多大？
   - [ ] 还有Yolov5的效果为什么好那么多，CoCo_map都到了90%多了，why?指标不一样？还是网络真的有那么大的改善？结论和答案是什么？icevision的yolov5的v0c2007，效果好太多了，我都不知道为啥？
   - [ ] 自动驾驶qq群，有关slam的JD，以及一些行业交流，这方面也需要更open的来了解这写行业；极氪36有行业发展、分析、咨询类的文章，观点认识，需要认识整个行业，并开拓视野。
