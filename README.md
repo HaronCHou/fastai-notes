@@ -33,7 +33,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - bce_loss里面也是要自己实现softmax的 [自己实现的bcelossblog.csdn.net/code_plus/article/details/115739343)
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/72e1f419-7414-42ba-8b22-105c28bb09f4)
-
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/4857fe3b-036f-4de5-b70f-7c1cb93b2b0d)
 
 
 #### 2023年5月17日 ToDo
@@ -45,7 +45,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/f56e9b60-166d-4e65-85ac-a2822237b19e)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/eb460adb-5580-4825-9d9b-878f7cec1ac9)
-![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/4857fe3b-036f-4de5-b70f-7c1cb93b2b0d)
+
 
 
   - [ ] 再对照Jeremy之前的内容看一下效果，看看改为focal_loss之后的收益到底有多大？
