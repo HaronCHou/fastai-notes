@@ -28,6 +28,9 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
 
+### 2023年5月18日10:36:57
+- [x] focal_loss和bce_loss的差异在哪里体现？ softmax在哪里体现？
+
 #### 2023年5月17日 ToDo
   - [**如何打造高质量的深度学习数据集**？](https://www.zhihu.com/question/333074061)
   - [ ] 之前使用的是BCE_loss，改为focal_loss，试一下loss下降的情况，然后，再看下训练完成后mAP有怎样的变化呢？
