@@ -30,7 +30,9 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 ### 2023年5月18日10:36:57
 - [x] focal_loss和bce_loss的差异在哪里体现？ softmax在哪里体现？
-- bce_loss里面也是要自己实现softmax的 [自己实现的bcelossblog.csdn.net/code_plus/article/details/115739343)
+- bce_loss里面也是要自己实现softmax的 [自己实现的]bcelossblog.csdn.net/code_plus/article/details/115739343)
+- [很详细的focal loss的介绍](https://blog.csdn.net/BIgHAo1/article/details/121783011)
+
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/72e1f419-7414-42ba-8b22-105c28bb09f4)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/4857fe3b-036f-4de5-b70f-7c1cb93b2b0d)
