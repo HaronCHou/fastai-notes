@@ -47,9 +47,8 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
      - 同时为了分析label_loss和bbox_loss，参考https://github.com/HaronCHou/fastai-notes/blob/main/SSD_mAP.ipynb 里面的做法，把label_loss和bbox_loss分别显示
      - bce_loss和focal_loss差别如下所示：
 - 与focal loss相比，loss的值增加了很多。应该是anchor box 189个比较大。189*bs*所有的，累积下来，focal loss得比重就降低了很多。
-- focal loss在类别不平衡问题面前是很有效的，以及在易区分的物体上
-- 降低了一些难度大
-- 
+- focal loss在类别不平衡问题面前是很有效的，以及在易区分的物体上降低了一些难度大
+- 对于目标检测而言，anchor189个太多，是一个典型的类别不平衡问题，所以加了focal loss后，效果好很多！ 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/f56e9b60-166d-4e65-85ac-a2822237b19e)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/eb460adb-5580-4825-9d9b-878f7cec1ac9)
 
