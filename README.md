@@ -38,6 +38,8 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - 测试三个loss后发现，没啥变化，在pets上。讲道理focal loss要优秀一些；结论是：数据集太完美了，不存在不平衡，只要有一个类别是不平衡的话，应该就可以看到效果，所以下一步是制造不平衡的数据集，然后看下效果。
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/7801bcce-ac59-4c1b-8c10-59d881972cdc)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/3566558b-2b5b-401f-b77c-aaa907de5dd8)
+- 将其中一个类别从200张图，减少90张后；差异
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/8c10c1f6-3da8-42bb-abdf-d325033c28d6)
 
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/72e1f419-7414-42ba-8b22-105c28bb09f4)
@@ -54,10 +56,6 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/f56e9b60-166d-4e65-85ac-a2822237b19e)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/eb460adb-5580-4825-9d9b-878f7cec1ac9)
-
-- 将其中一个类别从200张图，减少90张后；差异
-![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/57f6a21d-6d69-443b-908b-840c8b975bf8)
-
 
   - [ ] 再对照Jeremy之前的内容看一下效果，看看改为focal_loss之后的收益到底有多大？
   - [ ] 还有Yolov5的效果为什么好那么多，CoCo_map都到了90%多了，why?指标不一样？还是网络真的有那么大的改善？结论和答案是什么？icevision的yolov5的v0c2007，效果好太多了，我都不知道为啥？
