@@ -40,7 +40,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/3566558b-2b5b-401f-b77c-aaa907de5dd8)
 - 将其中一个类别从200张图，减少90张后；差异
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/8c10c1f6-3da8-42bb-abdf-d325033c28d6)
-
+[笔记本为pet.ipynb](https://github.com/HaronCHou/fastai-notes/blob/main/pets.ipynb)
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/72e1f419-7414-42ba-8b22-105c28bb09f4)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/4857fe3b-036f-4de5-b70f-7c1cb93b2b0d)
