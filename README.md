@@ -34,6 +34,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/72e1f419-7414-42ba-8b22-105c28bb09f4)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/4857fe3b-036f-4de5-b70f-7c1cb93b2b0d)
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/a04693f4-fb20-405a-9783-6c588781f239)
 
 
 #### 2023年5月17日 ToDo
