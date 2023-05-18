@@ -54,8 +54,8 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/f56e9b60-166d-4e65-85ac-a2822237b19e)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/eb460adb-5580-4825-9d9b-878f7cec1ac9)
-- 将其中一个类别从200张图，减少90张后；差异
 
+- 将其中一个类别从200张图，减少90张后；差异
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/57f6a21d-6d69-443b-908b-840c8b975bf8)
 
 
