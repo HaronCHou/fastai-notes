@@ -36,6 +36,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - 在pets的数据集上看下效果。
   - 测试后，发现4个epoch并不能看到太多；同时一定要Lr_find看下合适的学习率是多少；loss_func竟然可以自定义；关键在于里面没有One_hot_embedding，pets数据集没有自定义做这一步
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/7801bcce-ac59-4c1b-8c10-59d881972cdc)
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/3566558b-2b5b-401f-b77c-aaa907de5dd8)
 
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/72e1f419-7414-42ba-8b22-105c28bb09f4)
