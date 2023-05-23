@@ -29,6 +29,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - 在pets的数据集上看下效果。
   - 测试后，发现4个epoch并不能看到太多；同时一定要Lr_find看下合适的学习率是多少；loss_func竟然可以自定义；关键在于里面没有One_hot_embedding，pets数据集没有自定义做这一步
   - 测试三个loss后发现，没啥变化，在pets上。讲道理focal loss要优秀一些；结论是：数据集太完美了，不存在不平衡，只要有一个类别是不平衡的话，应该就可以看到效果，所以下一步是制造不平衡的数据集，然后看下效果。
+  - 2023年5月23日10:59:28 补充：focal loss在分类问题上，对loss的改变，差别不大；但是在目标检测任务中，由于anchor是189个，数量较多；一个epoch下来，loss的改变是比较大的；focal loss的绝对值比BCE loss低了10倍多左右，绝对值差异；但是对于map的结果影响不大，还是0.35左右的mAP，所以在ssd网络中，要提升mAP的话，loss可能不是最重要的，还要寻找优化点最高的地方！！！
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/7801bcce-ac59-4c1b-8c10-59d881972cdc)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/3566558b-2b5b-401f-b77c-aaa907de5dd8)
 - 将其中一个类别从200张图，减少90张后；差异
