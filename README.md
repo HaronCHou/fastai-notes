@@ -36,6 +36,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - VOC mAP和COCO mAP的差异，控制的自变量不一样。来源：https://blog.csdn.net/c2250645962/article/details/106476147
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/27fe13ef-4283-4f5f-a2d0-8cb1408e4dea)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/89d9beb2-66a3-424f-b5f2-1450fe544a85)
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/30ca2574-692e-446b-a04d-52398e3caacf)
 
 
 ### 2023年5月18日10:36:57
