@@ -21,6 +21,14 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
 
+### 2023年5月23日14:52:09
+> 
+> - 精读Radek的《menta Learning》
+>   - 建立baseline，然后阅读paper（正确的方法阅读），验证是否对自己的任务有用；读论文，复现，看结果，分析是否work？
+>   - 每天都一点点改进，让自己的模型表现更好
+>   - 不要单纯调参去运行实验，改进网络更重要。
+
+
 ### 2023年5月18日10:36:57
 - [x] focal_loss和bce_loss的差异在哪里体现？ softmax在哪里体现？
 - bce_loss里面也是要自己实现softmax的 [自己实现的](https://blog.csdn.net/code_plus/article/details/115739343)
