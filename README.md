@@ -33,7 +33,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - 读以前写得《目标检测.docx》的文档，温故而知新！看到voc2007数据集的目标数量，再看训练结果，一起分析。
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/b21a1aa9-185f-4b3f-a104-a934cdc596ff)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/e7ae7021-7529-4e1d-8aa1-2f816ea43c53)
-- VOC mAP和COCO mAP的差异，控制的自变量不一样。
+- VOC mAP和COCO mAP的差异，控制的自变量不一样。来源：https://blog.csdn.net/c2250645962/article/details/106476147
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/27fe13ef-4283-4f5f-a2d0-8cb1408e4dea)
 
 
