@@ -23,7 +23,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 ### 2023年5月18日10:36:57
 - [x] focal_loss和bce_loss的差异在哪里体现？ softmax在哪里体现？
-- bce_loss里面也是要自己实现softmax的 [自己实现的]bcelossblog.csdn.net/code_plus/article/details/115739343)
+- bce_loss里面也是要自己实现softmax的 [自己实现的](https://blog.csdn.net/code_plus/article/details/115739343)
 - [很详细的focal loss的介绍](https://blog.csdn.net/BIgHAo1/article/details/121783011)
   - 既然focal loss对分类任务影响较大，可以在分类任务上尝试，看看focal loss对acc的影响有多大，同样的数据，同样的epoch来做一个参考和说明
   - 在pets的数据集上看下效果。
