@@ -30,6 +30,10 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 >   - 要写Debug代码来帮助诊断和分析模型，理解模型到底在干什么，是不是work？
 - 读yolo的paper，并看涨点多的地方，去改进SSD，看看效果怎么样？
 
+- 读以前写得《目标检测.docx》的文档，温故而知新！看到voc2007数据集的目标数量，再看训练结果，一起分析。
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/b21a1aa9-185f-4b3f-a104-a934cdc596ff)
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/e7ae7021-7529-4e1d-8aa1-2f816ea43c53)
+
 
 ### 2023年5月18日10:36:57
 - [x] focal_loss和bce_loss的差异在哪里体现？ softmax在哪里体现？
