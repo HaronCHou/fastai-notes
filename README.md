@@ -21,6 +21,11 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
 
+### 2023年5月24日09:43:07
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/67977a04-5b80-4462-a8e8-792e3e2bcff3)
+
+
+
 ### 2023年5月23日14:52:09
 > 
 > - 精读Radek的《menta Learning》
