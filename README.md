@@ -22,6 +22,9 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ❌UnDo  ✔️Done   ⭕ToDo
 
 ### 2023年5月24日09:43:07
+- clas类别概率图可视化：意义很大；
+- 特征提取hooks，可视化，意义也比较大；至少也是指示anchor的类别；
+- ①骨干网络特征提取图可视化；②类别概率图可视化，两者结合更能体现出骨干网络和检测头的价值
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/67977a04-5b80-4462-a8e8-792e3e2bcff3)
 
 
