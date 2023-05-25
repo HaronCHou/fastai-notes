@@ -24,6 +24,11 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ### 2023年5月25日15:55:38
 - 仔细阅读了yolov3的源码和唐宇迪的注释；环境为：A100, root环境下，zhr_fastai1的环境；代码也在root环境下；数据集是coco数据集。
 - 心得：这个loss里面最大的组成是置信度loss，这个挺奇怪的；有目标的和没目标的，这个loss的计算极其奇怪；v2和v3的loss组成是一毛一样的。
+- yolov3跑VOC2007数据集试一下，看一下mAP的结果，现在是两边的mAP定义不一样，不知道Yolov3的是不是coco map；要区分一下结果。才能有一个一直的认识
+- https://pjreddie.com/darknet/yolo/ yolo跑VOC数据集的demo在此处
+- 还有Yolov2的源码使用的VOC mAP，可以去看下源码的实现
+
+
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/ee9e390a-67be-4635-b88b-d2a129aecfe9)
 
 
