@@ -20,6 +20,8 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ------------------
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
+### 2023年5月26日14:50:11
+- yolov3去使用voc数据集，并计算voc2007的mAP
 
 ### 2023年5月25日15:55:38
 - 仔细阅读了yolov3的源码和唐宇迪的注释；环境为：A100, root环境下，zhr_fastai1的环境；代码也在root环境下；数据集是coco数据集。
