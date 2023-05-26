@@ -23,6 +23,13 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ### 2023年5月26日14:50:11
 - yolov3去使用voc数据集，并计算voc2007的mAP
 
+```bash
+# yolov3唐宇迪代码环境配置：在fastai1的环境上安装tensorflow
+pip install --index-url https://pypi.douban.com/simple tensorflow
+or
+pip install --index-url http://mirrors.aliyun.com/pypi/simple/ tensorflow
+```
+
 ### 2023年5月25日15:55:38
 - 仔细阅读了yolov3的源码和唐宇迪的注释；环境为：A100, root环境下，zhr_fastai1的环境；代码也在root环境下；数据集是coco数据集。
 - 心得：这个loss里面最大的组成是置信度loss，这个挺奇怪的；有目标的和没目标的，这个loss的计算极其奇怪；v2和v3的loss组成是一毛一样的。
