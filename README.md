@@ -20,7 +20,12 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ------------------
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
-### 2023年5月26日14:50:11
+### 2023年5月29日 星期一
+- 上周五看到两个好的代码：①yolov3的pytorch源码，我已经可以完全看懂了；需要尝试，并了解其中的一些loss，等差别；mAP等；关键在于mAP的计算是怎样的
+- VOC2007_mAP在yolov v2的时候也不太高；v3也不太高；
+- RetinaNet fastai1，有比较好的metric，仔细阅读其代码，然后，看能否在这个基础上优化，做有意义的测试。https://github.com/ChristianMarzahl/ObjectDetection/tree/master
+
+### 2023年5月26日14:50:11 周五
 - yolov3去使用voc数据集，并计算voc2007的mAP
 
 ```bash
@@ -30,7 +35,7 @@ or
 pip install --index-url http://mirrors.aliyun.com/pypi/simple/ tensorflow
 ```
 
-### 2023年5月25日15:55:38
+### 2023年5月25日15:55:38 周四
 - 仔细阅读了yolov3的源码和唐宇迪的注释；环境为：A100, root环境下，zhr_fastai1的环境；代码也在root环境下；数据集是coco数据集。
 - 心得：这个loss里面最大的组成是置信度loss，这个挺奇怪的；有目标的和没目标的，这个loss的计算极其奇怪；v2和v3的loss组成是一毛一样的。
 - yolov3跑VOC2007数据集试一下，看一下mAP的结果，现在是两边的mAP定义不一样，不知道Yolov3的是不是coco map；要区分一下结果。才能有一个一直的认识
@@ -41,7 +46,7 @@ pip install --index-url http://mirrors.aliyun.com/pypi/simple/ tensorflow
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/ee9e390a-67be-4635-b88b-d2a129aecfe9)
 
 
-### 2023年5月24日09:43:07
+### 2023年5月24日09:43:07 周三
 - clas类别概率图可视化：意义很大；
 - 特征提取hooks，可视化，意义也比较大；至少也是指示anchor的类别；
 - ①骨干网络特征提取图可视化；②类别概率图可视化，两者结合更能体现出骨干网络和检测头的价值
