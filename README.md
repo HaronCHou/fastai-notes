@@ -23,7 +23,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ### 2023年5月29日 星期一
 - 上周五看到两个好的代码：①yolov3的pytorch源码，我已经可以完全看懂了；需要尝试，并了解其中的一些loss，等差别；mAP等；关键在于mAP的计算是怎样的
 - VOC2007_mAP在yolov v2的时候也不太高；v3也不太高；
-- RetinaNet fastai1，有比较好的metric，仔细阅读其代码，然后，看能否在这个基础上优化，做有意义的测试。https://github.com/ChristianMarzahl/ObjectDetection/tree/master
+- RetinaNet fastai1，有比较好的metric，仔细阅读其代码，然后，看能否在这个基础上优化，做有意义的测试。https://github.com/ChristianMarzahl/ObjectDetection/tree/master fastai1 有详细的metric debug代码，并复用
 - https://github.com/wushuang01/Focal_loss_for_object_detection  RetinaNet focal loss voc2007 mAP 69%
 - https://github.com/longcw/yolo2-pytorch/tree/master yolov2 pytorch 没有mAP方面的说明
 - https://github.com/longcw/yolo2-pytorch/issues/23 中https://github.com/cory8249/yolo2-pytorch/tree/master cory8249在上面的基础上获得了 71%的VOC mAP
