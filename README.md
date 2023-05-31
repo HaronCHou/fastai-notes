@@ -20,6 +20,10 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ------------------
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
+### 2023年5月31日 星期三
+- RetinaNet fastai1的nb学习，下载了cocosample的数据集，学习其内容
+- 感触比较大的是：anchor很多，anchor和gt-box的情况，可视化，可以发现VOC数据集，在189个锚框的时候，能框住的目标真的很少，这会导致怎样的问题？
+
 ### 2023年5月29日 星期一
 - 上周五看到两个好的代码：①yolov3的pytorch源码，我已经可以完全看懂了；需要尝试，并了解其中的一些loss，等差别；mAP等；关键在于mAP的计算是怎样的
 - VOC2007_mAP在yolov v2的时候也不太高；v3也不太高；
