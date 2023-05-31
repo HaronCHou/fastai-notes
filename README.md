@@ -35,6 +35,22 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 v2 code of this repo, 值得一看
 
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/30ae8420-9545-4f28-911c-bb0423057ac9)
+
+	1. https://github.com/ChristianMarzahl/ObjectDetection/tree/master
+	2. https://github.com/wushuang01/Focal_loss_for_object_detection RetinaNet focal loss voc2007 mAP 69%
+	3. longcw/yolo2-pytorch#23 中 https://github.com/cory8249/yolo2-pytorch/tree/master cory8249在上面的基础上获得了 71%的VOC mAP
+	4. https://nbviewer.org/gist/daveluo/2ab83da32e623864e543d7251e9beef4 详细的MAP计算
+ 
+ > daveluo参考了Sylvain Gugger的代码，Sylvain的mAP代码地址为： https://github.com/sgugger/Deep-Learning/blob/master/mAP/Computing%20the%20mAP%20metric.ipynb
+ > fastai 论坛的讨论地址为： http://forums.fast.ai/t/mean-average-precision-map/14345 
+ > ————————————————
+ >	版权声明：本文为CSDN博主「_helen_520」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+ >	原文链接： https://blog.csdn.net/haronchou/article/details/127976769
+  5. 我用4的代码，进行的mAP计算：voc07 ssd_fastai 189anchor， mAP=0.45 https://github.com/HaronCHou/fastai-notes/blob/main/SSD_mAP.ipynb
+
+
+
 
 ### 2023年5月29日 星期一
 - 上周五看到两个好的代码：①yolov3的pytorch源码，我已经可以完全看懂了；需要尝试，并了解其中的一些loss，等差别；mAP等；关键在于mAP的计算是怎样的
