@@ -44,6 +44,7 @@ v2 code of this repo, 值得一看
  
  > daveluo参考了Sylvain Gugger的代码，Sylvain的mAP代码地址为： https://github.com/sgugger/Deep-Learning/blob/master/mAP/Computing%20the%20mAP%20metric.ipynb
  > fastai 论坛的讨论地址为： http://forums.fast.ai/t/mean-average-precision-map/14345 
+ > 
  > ————————————————
  >	版权声明：本文为CSDN博主「_helen_520」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
  >	原文链接： https://blog.csdn.net/haronchou/article/details/127976769
