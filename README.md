@@ -36,6 +36,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 v2 code of this repo, 值得一看
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/30ae8420-9545-4f28-911c-bb0423057ac9)
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/a79ecb19-b70c-4785-b37f-a9ee6440e0e2)
 
 1. https://github.com/ChristianMarzahl/ObjectDetection/tree/master
 2. https://github.com/wushuang01/Focal_loss_for_object_detection RetinaNet focal loss voc2007 mAP 69%
