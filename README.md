@@ -29,7 +29,11 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
   - （1）nms_scores_thresh=0.05 ---> nms， nms_iou_thresh=0.5
   - （2）`tps[k,c] ` k为置信度阈值；c为某个类别； `fps[k,c], fns[k,c]` 
 
+> Hi @ChristianMarzahl , thank you for your work. It was helpful for me, especially anchors representations.
+> I adapted your code to fastai2, feel free to use it https://colab.research.google.com/drive/1ZA6yWj8wHwKUj3HT_LK3rsKYUPIkwnzZ
+> Once I get good results I'll update this repo https://github.com/manycoding/signatures-detection with the V2 code.
 
+v2 code of this repo, 值得一看
 
 
 ### 2023年5月29日 星期一
