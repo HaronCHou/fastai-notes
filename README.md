@@ -39,7 +39,7 @@ v2 code of this repo, 值得一看
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/a79ecb19-b70c-4785-b37f-a9ee6440e0e2)
 
 1. https://github.com/ChristianMarzahl/ObjectDetection/tree/master
-2. https://github.com/wushuang01/Focal_loss_for_object_detection RetinaNet focal loss voc2007 mAP 69%
+2. https://github.com/wushuang01/Focal_loss_for_object_detection RetinaNet focal loss voc2007 mAP 69%  这个mAP也是通过文件List来计算的，跟retinanet那个是一模一样的
 3. longcw/yolo2-pytorch#23 中 https://github.com/cory8249/yolo2-pytorch/tree/master cory8249在上面的基础上获得了 71%的VOC mAP
 4. https://nbviewer.org/gist/daveluo/2ab83da32e623864e543d7251e9beef4 详细的MAP计算
  
