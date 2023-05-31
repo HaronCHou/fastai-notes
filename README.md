@@ -21,6 +21,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
 ### 2023年5月31日 星期三
+- 凌乱了，文件mAP和nms_score_thresh_mAP两个整凌乱了；讲道理都应该是pr曲线的阈值是那啥，怎么能是文件mAP呢
 - RetinaNet fastai1的nb学习，下载了cocosample的数据集，学习其内容
 - 感触比较大的是：anchor很多，anchor和gt-box的情况，可视化，可以发现VOC数据集，在189个锚框的时候，能框住的目标真的很少，这会导致怎样的问题？
 - https://github.com/ChristianMarzahl/ObjectDetection/tree/master  这个代码中的mAP计算，是scores的阈值为0.3，然后计算这个下面的precision和recall，只有一个pr值，相当于；计算样本的pr曲线感觉不太对劲哦，应该是里面的固定scores阈值后，变化iou阈值？或者反着来的mAP值，才是对的；怎么回事对样本的pr曲线呢，这个有啥意义呢？
@@ -34,6 +35,9 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 > Once I get good results I'll update this repo https://github.com/manycoding/signatures-detection with the V2 code.
 
 v2 code of this repo, 值得一看
+
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/b362ded6-1d28-419f-b2d6-4f744497103e)
+
 
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/30ae8420-9545-4f28-911c-bb0423057ac9)
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/a79ecb19-b70c-4785-b37f-a9ee6440e0e2)
