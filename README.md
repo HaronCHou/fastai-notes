@@ -25,6 +25,12 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - 感触比较大的是：anchor很多，anchor和gt-box的情况，可视化，可以发现VOC数据集，在189个锚框的时候，能框住的目标真的很少，这会导致怎样的问题？
 - https://github.com/ChristianMarzahl/ObjectDetection/tree/master  这个代码中的mAP计算，是scores的阈值为0.3，然后计算这个下面的precision和recall，只有一个pr值，相当于；计算样本的pr曲线感觉不太对劲哦，应该是里面的固定scores阈值后，变化iou阈值？或者反着来的mAP值，才是对的；怎么回事对样本的pr曲线呢，这个有啥意义呢？
 - 和之前的mAP计算代码差距太大，必须加以对比。
+- 之前的mAP计算逻辑如下：
+  - （1）nms_scores_thresh=0.05 ---> nms， nms_iou_thresh=0.5
+  - （2）`tps[k,c] ` k为置信度阈值；c为某个类别； `fps[k,c], fns[k,c]` 
+
+
+
 
 ### 2023年5月29日 星期一
 - 上周五看到两个好的代码：①yolov3的pytorch源码，我已经可以完全看懂了；需要尝试，并了解其中的一些loss，等差别；mAP等；关键在于mAP的计算是怎样的
