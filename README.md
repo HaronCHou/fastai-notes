@@ -50,6 +50,7 @@ v2 code of this repo, 值得一看
  >	原文链接： https://blog.csdn.net/haronchou/article/details/127976769
   5. 我用4的代码，进行的mAP计算：voc07 ssd_fastai 189anchor， mAP=0.45 https://github.com/HaronCHou/fastai-notes/blob/main/SSD_mAP.ipynb
 
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/d8eb1aba-6082-4689-86ab-e8d3fe95a071)
 
 
 
