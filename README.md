@@ -20,6 +20,11 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ------------------
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
+### 2023年6月1日 星期四
+- mAP的计算说明：①非VOC_2007，daveluo的mAP代码；
+- VOC07_mAP：文件list的mAP；RetinaNet fastai1的代码；focal loss的代码都是这种。
+- 
+
 ### 2023年5月31日 星期三
 - 凌乱了，文件mAP和nms_score_thresh_mAP两个整凌乱了；讲道理都应该是pr曲线的阈值是那啥，怎么能是文件mAP呢
 - RetinaNet fastai1的nb学习，下载了cocosample的数据集，学习其内容
