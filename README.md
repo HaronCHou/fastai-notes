@@ -24,6 +24,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - mAP的计算说明：①非VOC_2007，daveluo的mAP代码；
 - VOC07_mAP：文件list的mAP；RetinaNet fastai1的代码；focal loss的代码都是这种。
 - 坑一：valid太少，只有2个batch,0.02; 但是Loss在持续下降，说明网络训练的没问题；但是看到batch的个数就不对了，说明valid的数据量少了，所以AP就没用了；增加数据量
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/da6c433c-b376-4e97-a9c6-477500c28f75)
 
 ### 2023年5月31日 星期三
 - 凌乱了，文件mAP和nms_score_thresh_mAP两个整凌乱了；讲道理都应该是pr曲线的阈值是那啥，怎么能是文件mAP呢
