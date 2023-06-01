@@ -26,6 +26,8 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - 坑一：valid太少，只有2个batch,0.02; 但是Loss在持续下降，说明网络训练的没问题；但是看到batch的个数就不对了，说明valid的数据量少了，所以AP就没用了；增加数据量
 - RetinaNet Christian的代码：先用了0.3的
 ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/da6c433c-b376-4e97-a9c6-477500c28f75)
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/75d2137a-b465-4b5c-bf28-87c69c7cf016)
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/1f3c056c-4ada-4d24-acbf-8445bf197e43)
 
 ### 2023年5月31日 星期三
 - 凌乱了，文件mAP和nms_score_thresh_mAP两个整凌乱了；讲道理都应该是pr曲线的阈值是那啥，怎么能是文件mAP呢
