@@ -20,6 +20,11 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ------------------
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
+### 2023年6月7日 星期三
+- 继续探索自上而下的路线的可行性：需要对icevision有一个深入的认识。从数据集->model->callback->map 等，都有一个清晰的认识，从认识库的源码开始！！
+  - 写笔记，然后回来论证这条道路的可行性！！
+  - 目标：（1）我如何在这之上，写自己的代码？（2）如何做我的baseline？（3）如何添砖加瓦？（4）如何保证代码正确？（5）如何判断路线的可行性？
+
 ### 2023年6月1日 星期四
 - mAP的计算说明：①非VOC_2007，daveluo的mAP代码；
 - VOC07_mAP：文件list的mAP；RetinaNet fastai1的代码；focal loss的代码都是这种。
