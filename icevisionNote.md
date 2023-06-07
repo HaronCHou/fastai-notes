@@ -10,5 +10,5 @@
   print(BaseRecord.__mro__)
 (<class 'icevision.core.record.BaseRecord'>, <class 'icevision.core.components.composite.TaskComposite'>, <class 'object'>)
   ```
-  
+  record先把所有的标签信息给处理完毕：bbox label，分验证集等，路径，ID编号，等工作全部完成
   ![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/bd347a11-b37f-48c1-b4ef-7227f0b35376)
