@@ -20,11 +20,17 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ------------------
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
+### 2023年6月8日 星期四
+- 看retinaNet，为什么效果和ssd有差异呢？怎么比较？
+- RetinaNet 2017 ICCV
+> RetinaNet是继SSD和YOLO V2公布后，YOLO V3诞生前的一款目标检测模型，出自何恺明大神的《Focal Loss for Dense Object Detection》。全文针对现有单阶段法（one-stage)目标检测模型中前景(positive)和背景(negatives)类别的不平衡问题，提出了一种叫做Focal Loss的损失函数，用来降低大量easy negatives在标准交叉熵中所占权重（提高hard negatives所占权重)。为了检测提出的Focal Loss损失函数的有效性，所以作者就顺便提出了一种简单的模型RetinaNet。（所以RetinaNet不是本篇论文的主角，仅仅是附属物了呗？）
+
 ### 2023年6月7日 星期三
 - 继续探索自上而下的路线的可行性：需要对icevision有一个深入的认识。从数据集->model->callback->map 等，都有一个清晰的认识，从认识库的源码开始！！
   - 写笔记，然后回来论证这条道路的可行性！！
   - 目标：（1）我如何在这之上，写自己的代码？（2）如何做我的baseline？（3）如何添砖加瓦？（4）如何保证代码正确？（5）如何判断路线的可行性？
   - icevision详细笔记：[]()
+  > 由于v5太复杂了，所以还是用最简单的来看一下
 
 ### 2023年6月1日 星期四
 - mAP的计算说明：①非VOC_2007，daveluo的mAP代码；
