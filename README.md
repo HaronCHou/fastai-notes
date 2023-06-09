@@ -20,6 +20,12 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 ------------------
 ## 每日更新
 ❌UnDo  ✔️Done   ⭕ToDo
+
+
+### 2023年6月9日 星期五
+- aeroplane dets:2  gts:102
+-   
+
 ### 2023年6月8日 星期四
 - 看retinaNet，为什么效果和ssd有差异呢？怎么比较？
 - RetinaNet 2017 ICCV
