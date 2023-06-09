@@ -23,8 +23,11 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 
 
 ### 2023年6月9日 星期五
-- aeroplane dets:2  gts:102
+- aeroplane dets:2  gts:102  实际大小：600个； 所以这里的gts里面就有问题了。
 -   
+![image](https://github.com/HaronCHou/fastai-notes/assets/22512646/2e79f2ae-99c3-49f6-860c-55cc5a35b010)
+
+
 
 ### 2023年6月8日 星期四
 - 看retinaNet，为什么效果和ssd有差异呢？怎么比较？
