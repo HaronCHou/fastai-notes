@@ -25,7 +25,7 @@ fastai part1 &amp; part2 notes, part1的中文笔记来自其他作者对hiromis
 - 找到了Radek的twitter的正确访问姿势：`from:radekosmulski since:2017-09-30 until:2017-10-30`
 - 然后开始复制他之前的Keras笔记本，安装keras环境，运行笔记本，然后获得一些insight
 - `pip install tensorflow` 安装tensorflow会自动安装keras的，他两是绑定在一起的。以及keras-prepocessing会安装很多依赖的。
-
+- 根本不需要去做Keras（colab运行的keras代码），然后只要重写为pytorch代码即可。
 
 ### 2023年8月8日 星期二
 - 整整2个月没有回来了，大概说一下这两个月我在干什么！
